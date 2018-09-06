@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A33F8FE3-A35A-4DDF-B96C-0157224F602C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MonoDragons.Core</RootNamespace>
     <AssemblyName>MonoDragons.Core</AssemblyName>
@@ -38,9 +38,6 @@
     <ApplicationIcon>
     </ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>MonoDragons.Core.Demo</StartupObject>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animations\AnimationExtensions.cs" />
     <Compile Include="Animations\HorizontalFlyInAnimation.cs" />
@@ -69,7 +66,6 @@
     <Compile Include="Common\Map.cs" />
     <Compile Include="Common\MustInit.cs" />
     <Compile Include="Common\NotInitializedException.cs" />
-    <Compile Include="Demo.cs" />
     <Compile Include="Development\Perf.cs" />
     <Compile Include="Errors\MessageBoxErrorHandler.cs" />
     <Compile Include="Errors\AppDetails.cs" />
@@ -257,30 +253,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sounds\talkblip.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\VolumeDemo\CloningRoom.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\VolumeDemo\HackerSpaceship.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\VolumeDemo\NewObjective.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\VolumeDemo\PixelButton-Hover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\VolumeDemo\PixelButton-Press.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\VolumeDemo\PixelButton.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\VolumeDemo\Scanning.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\VolumeDemo\Waves.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
