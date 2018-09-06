@@ -1,0 +1,31 @@
+﻿using Microsoft.Xna.Framework;
+using MonoDragons.ZFS.Themes;
+
+namespace MonoDragons.ZFS.Characters.Prefabs
+{
+    class MainChar : Character
+    {
+        public const string Name = "Weldon Zemke";
+        public const string Bust = "Characters/MainCharacter/MainCharacter-bust.png";
+
+        public MainChar(CharacterClass c) : base(
+            new CharacterBody("MainCharacter", new Vector2(-13, -42), TeamColors.Friendly.Characters_GlowColor),
+            new CharacterStats
+            {
+                Name = Name,
+                HP = 150,
+                Movement = 8,
+                Accuracy = 6,
+                Guts = 6,
+                Agility = 6,
+                Perception = 8
+
+            }.WithMods(c.StatMods),
+            new CharacterGear(c.WeaponSet.Primary, c.WeaponSet.Secondary),
+            Team.Friendly,
+            "Characters/MainCharacter/MainCharacter-face.png",
+            Bust)
+        {
+        }
+    }
+}
