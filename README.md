@@ -1,5 +1,8 @@
 # ZFS
 
+[![Build status](https://ci.appveyor.com/api/projects/status/hm595pmcdk7vaybg/branch/master?svg=true)](https://ci.appveyor.com/project/EnigmaDragons/zfs/branch/master)
+
+
 ----
 
 ### Game Concept
