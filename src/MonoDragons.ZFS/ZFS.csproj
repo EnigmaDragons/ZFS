@@ -61,6 +61,7 @@
     <Compile Include="Characters\Gear\Weapons.cs" />
     <Compile Include="Characters\Gear\Weapon.cs" />
     <Compile Include="Characters\Gear\WeaponSet.cs" />
+    <Compile Include="Characters\Gear\WeaponType.cs" />
     <Compile Include="Characters\Prefabs\CorpSec2.cs" />
     <Compile Include="Characters\Prefabs\CorpSec3.cs" />
     <Compile Include="Characters\Prefabs\MainChar.cs" />

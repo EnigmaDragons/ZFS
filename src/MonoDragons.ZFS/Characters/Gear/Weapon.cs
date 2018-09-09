@@ -9,6 +9,7 @@ namespace MonoDragons.ZFS.Characters.Gear
         public abstract string ShortDescription { get; }
         public abstract bool IsRanged { get; }
         public abstract bool IsMelee { get; }
+        public abstract WeaponType Type { get; }
 
         public RangedWeapon AsRanged()
         {

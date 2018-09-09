@@ -33,6 +33,7 @@ namespace MonoDragons.ZFS.Characters.Gear
         public override string Name { get; } = "RSX-167 Carbine";
         public override string Image { get; } = "Weapons/nnvscopedassault";
         public override string ShortDescription { get; } = "Very accurate, single shot rifle. Particularly deadly at long range.";
+        public override WeaponType Type { get; } = WeaponType.Rifle;
 
         public override int Accuracy { get; } = 12;
         public override int NumShotsPerAttack { get; } = 1;
@@ -64,6 +65,7 @@ namespace MonoDragons.ZFS.Characters.Gear
         public override string Name { get; } = "Golden Gun";
         public override string Image { get; } = "Weapons/slgstandard";
         public override string ShortDescription { get; } = "The ultimate";
+        public override WeaponType Type { get; } = WeaponType.Pistol;
 
         public override int Accuracy { get; } = 21;
         public override int NumShotsPerAttack { get; } = 1;
@@ -88,6 +90,7 @@ namespace MonoDragons.ZFS.Characters.Gear
         public override string Name { get; } = "G13 Combat Shotgun";
         public override string Image { get; } = "Weapons/urxsemishotgun";
         public override string ShortDescription { get; } = "Brutal semi-automatic combat weapon. Lethal in close-quarters combat. ";
+        public override WeaponType Type { get; } = WeaponType.Assault;
         public override int Accuracy { get; } = 10;
         public override int NumShotsPerAttack { get; } = 1;
         public override int DamagePerHit { get; } = 34;
@@ -107,6 +110,7 @@ namespace MonoDragons.ZFS.Characters.Gear
         public override string Name { get; } = "WAR-27 Defense SMG";
         public override string Image { get; } = "Weapons/smanclassicar";
         public override string ShortDescription { get; } = "Urban terrain submachine gun. Spits out bullets at an unbelievable rate.";
+        public override WeaponType Type { get; } = WeaponType.Assault;
         public override int Accuracy { get; } = 8;
         public override int NumShotsPerAttack { get; } = 7;
         public override int DamagePerHit { get; } = 5;
@@ -130,6 +134,7 @@ namespace MonoDragons.ZFS.Characters.Gear
         public override string Name { get; } = "Glock-99";
         public override string Image { get; } = "Weapons/rephoser";
         public override string ShortDescription { get; } = "The latest in self-defense full-auto pistols.";
+        public override WeaponType Type { get; } = WeaponType.Pistol;
         public override int Accuracy { get; } = 9;
         public override int NumShotsPerAttack { get; } = 4;
         public override int DamagePerHit { get; } = 6;
@@ -151,6 +156,7 @@ namespace MonoDragons.ZFS.Characters.Gear
         public override string Name { get; } = "RSX .60 Magnum";
         public override string Image { get; } = "Weapons/tirmagnum";
         public override string ShortDescription { get; } = "Throws slugs that pack a serious wallop. Has a lot of recoil.";
+        public override WeaponType Type { get; } = WeaponType.Pistol;
         public override int Accuracy { get; } = 11;
         public override int NumShotsPerAttack { get; } = 2;
         public override int DamagePerHit { get; } = 9;
@@ -176,6 +182,7 @@ namespace MonoDragons.ZFS.Characters.Gear
         public override string Name { get; } = "SLG Standard Semi";
         public override string Image { get; } = "Weapons/slgstandard";
         public override string ShortDescription { get; } = "Accurate, effective, and reliable personal close-range side arm.";
+        public override WeaponType Type { get; } = WeaponType.Pistol;
         public override int Accuracy { get; } = 10;
         public override int NumShotsPerAttack { get; } = 3;
         public override int DamagePerHit { get; } = 7;
