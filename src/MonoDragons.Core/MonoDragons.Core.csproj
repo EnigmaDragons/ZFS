@@ -72,6 +72,7 @@
     <Compile Include="Errors\ReportErrorHandler.cs" />
     <Compile Include="Errors\IErrorHandler.cs" />
     <Compile Include="Engine\TimerTask.cs" />
+    <Compile Include="EventSystem\EventQueue.cs" />
     <Compile Include="Examples\SimpleLogoScene.cs" />
     <Compile Include="Examples\SimpleMainMenuScene.cs" />
     <Compile Include="Inputs\DirectionChanged.cs" />

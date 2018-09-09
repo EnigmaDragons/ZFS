@@ -20,7 +20,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
                 && CurrentData.Friendlies.Any(x => CurrentData.FriendlyPerception[character.CurrentTile.Position]))
             {
                 _hasSeen[character] = true;
-                EventQueue.Instance.Add(new EnemySpotted { Enemy = character });
+                Event.Queue(new EnemySpotted { Enemy = character });
             }
             else if (character.Team == Team.Friendly)
             {
@@ -28,7 +28,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
                     .ForEach(x =>
                     {
                         _hasSeen[x] = true;
-                        EventQueue.Instance.Add(new EnemySpotted { Enemy = x });
+                        Event.Queue(new EnemySpotted { Enemy = x });
                     });
             }
         }

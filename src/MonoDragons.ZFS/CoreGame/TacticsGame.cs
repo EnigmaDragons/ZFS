@@ -74,7 +74,7 @@ namespace MonoDragons.ZFS.CoreGame
             Add(new DialogWatcher());
             //TODO: trash class here
             Add(new TargetKilledSceneTransition());
-            Add(EventQueue.Instance);
+            Add(Event.UseQueue());
             Add(_drawMaster);
             Add(_combat);
             Add(_camera);

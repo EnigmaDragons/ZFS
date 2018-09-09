@@ -24,17 +24,17 @@ namespace MonoDragons.ZFS.AI
             {
                 var o = e.Options;
                 if (o.ContainsKey(ActionType.Shoot))
-                    EventQueue.Instance.Add(new AIActionQueued(() => o[ActionType.Shoot].Invoke()));
+                    Event.Queue(new AIActionQueued(() => o[ActionType.Shoot].Invoke()));
                 else if (Data.SeenEnemies.Count == 0 && o.ContainsKey(ActionType.Pass))
-                    EventQueue.Instance.Add(new AIActionQueued(() => o[ActionType.Pass].Invoke()));
+                    Event.Queue(new AIActionQueued(() => o[ActionType.Pass].Invoke()));
                 else if (o.ContainsKey(ActionType.Hide) && new SpotHasGoodCoverCalculation(Data, Char.CurrentTile.Position).Calculate())
-                    EventQueue.Instance.Add(new AIActionQueued(() => o[ActionType.Hide].Invoke()));
+                    Event.Queue(new AIActionQueued(() => o[ActionType.Hide].Invoke()));
                 else if (o.ContainsKey(ActionType.Overwatch))
-                    EventQueue.Instance.Add(new AIActionQueued(() => o[ActionType.Overwatch].Invoke()));
+                    Event.Queue(new AIActionQueued(() => o[ActionType.Overwatch].Invoke()));
                 else if (o.ContainsKey(ActionType.Hide))
-                    EventQueue.Instance.Add(new AIActionQueued(() => o[ActionType.Hide].Invoke()));
+                    Event.Queue(new AIActionQueued(() => o[ActionType.Hide].Invoke()));
                 else if (o.ContainsKey(ActionType.Pass))
-                    EventQueue.Instance.Add(new AIActionQueued(() => o[ActionType.Pass].Invoke()));
+                    Event.Queue(new AIActionQueued(() => o[ActionType.Pass].Invoke()));
                 else
                     throw new Exception("No AI possible actions.");
             });

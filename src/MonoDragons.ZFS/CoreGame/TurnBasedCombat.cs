@@ -41,7 +41,7 @@ namespace MonoDragons.ZFS.CoreGame
 
         private void OnActionResolved(ActionResolved obj)
         {
-            EventQueue.Instance.Add(new TurnEnded());
+            Event.Queue(new TurnEnded());
         }
 
         public void MoveTo(int x, int y)

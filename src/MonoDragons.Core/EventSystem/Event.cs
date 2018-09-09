@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MonoDragons.Core.Engine;
 using MonoDragons.Core.Memory;
 
 namespace MonoDragons.Core.EventSystem
 {
     public static class Event
     {
+        private static readonly EventQueue EventQueue = new EventQueue();
         private static readonly List<EventSubscription> EventSubs = new List<EventSubscription>();
         private static readonly Events TransientEvents = new Events();
         private static readonly Events PersistentEvents = new Events();
 
         public static int SubscriptionCount => TransientEvents.SubscriptionCount + PersistentEvents.SubscriptionCount;
+
+        public static IAutomaton UseQueue() => EventQueue;
+
+        public static void Queue(object payload) => EventQueue.Add(payload);
         
         public static void Publish(object payload)
         {

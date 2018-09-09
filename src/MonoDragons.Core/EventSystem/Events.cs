@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace MonoDragons.Core.EventSystem
 {
     public sealed class Events
-    {
+    {       
         private readonly Dictionary<Type, List<object>> _eventActions = new Dictionary<Type, List<object>>();
         private readonly Dictionary<object, List<EventSubscription>> _ownerSubscriptions = new Dictionary<object, List<EventSubscription>>();
 

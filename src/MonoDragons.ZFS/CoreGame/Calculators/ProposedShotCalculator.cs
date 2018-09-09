@@ -13,8 +13,8 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
         private void PreviewShot(RangedTargetInspected e)
         {
             var proposed = new ProposedShotCalculation(e.Attacker, e.Defender, e.AttackerBlockInfo, e.DefenderBlockInfo).CalculateShot();
-            EventQueue.Instance.Add(new ActionReadied(() => EventQueue.Instance.Add(new ShotConfirmed { Proposed = proposed, OnFinished = () => EventQueue.Instance.Add(new ActionResolved()) })));
-            EventQueue.Instance.Add(proposed);
+            Event.Queue(new ActionReadied(() => Event.Queue(new ShotConfirmed { Proposed = proposed, OnFinished = () => Event.Queue(new ActionResolved()) })));
+            Event.Queue(proposed);
         }
     }
 }

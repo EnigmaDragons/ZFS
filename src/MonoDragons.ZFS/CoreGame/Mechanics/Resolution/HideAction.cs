@@ -13,10 +13,10 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
 
         private void OnHideChosen(HideSelected e)
         {
-            EventQueue.Instance.Add(new ActionReadied(() =>
+            Event.Queue(new ActionReadied(() =>
             {
                 CurrentData.CurrentCharacter.State.IsHiding = true;
-                EventQueue.Instance.Add(new ActionResolved());
+                Event.Queue(new ActionResolved());
             }));
         }
     }

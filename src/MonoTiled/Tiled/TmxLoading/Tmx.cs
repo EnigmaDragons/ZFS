@@ -25,25 +25,10 @@ namespace MonoTiled.Tiled.TmxLoading
             TileWidth = new XValue(map, "tilewidth").AsInt();
             TileHeight = new XValue(map, "tileheight").AsInt();
             Tilesets = map.Elements(XName.Get("tileset"))
-                .Select(x =>
-                {
-                    try
-                    {
-                        var src = x;
-                        if (!x.HasElements)
-                        {
-                            var path = Path.GetFullPath(Path.Combine("Content", mapDir, new XValue(x, "source").AsString()));
-                            var tsxDoc = XDocument.Load(path);
-                            src = tsxDoc.Element(XName.Get("tileset"));
-                        }
-                        return new Tsx(device, new XValue(x, "firstgid").AsInt(), mapDir, src);
-                    }
-                    catch (Exception e)
-                    {
-                        int i = 0;
-                        throw;
-                    }
-                }).ToList();
+                .Select(x => x.HasElements 
+                    ? new Tsx(device, new XValue(x, "firstgid").AsInt(), mapDir, x) 
+                    : new Tsx(device, new XValue(x, "firstgid").AsInt(), mapDir, new XValue(x, "source").AsString()))
+                .ToList();
             var layers = map.Elements(XName.Get("layer")).ToList();
             for (var i = 0; i < layers.Count; i++)
                 Layers.Add(new TmxLayer(i, layers[i]));

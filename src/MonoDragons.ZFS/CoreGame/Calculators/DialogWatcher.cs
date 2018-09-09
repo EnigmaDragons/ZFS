@@ -73,7 +73,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
         {
             if (_shouldShowDialogOnMovementResolved)
             {
-                EventQueue.Instance.Add(new DialogueStarted { Dialogs = _dialogToShowAtEndOfMovement });
+                Event.Queue(new DialogueStarted { Dialogs = _dialogToShowAtEndOfMovement });
                 _shouldShowDialogOnMovementResolved = false;
             }
         }

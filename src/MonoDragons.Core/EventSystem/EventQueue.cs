@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using MonoDragons.Core.Engine;
-using MonoDragons.Core.EventSystem;
 
-namespace MonoDragons.ZFS.CoreGame.StateEvents
+namespace MonoDragons.Core.EventSystem
 {
-    public class EventQueue : IAutomaton
+    public sealed class EventQueue : IAutomaton
     {
-        public static EventQueue Instance = new EventQueue();
-
         private List<object> _eventsToPublish = new List<object>();
 
         public void Add(object evt)

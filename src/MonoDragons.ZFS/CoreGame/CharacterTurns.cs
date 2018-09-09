@@ -45,7 +45,7 @@ namespace MonoDragons.ZFS.CoreGame
         
         private void PublishTurnBegun()
         {
-            EventQueue.Instance.Add(new TurnBegun { Character = CurrentCharacter });
+            Event.Queue(new TurnBegun { Character = CurrentCharacter });
         }
         
         private void Advance()
@@ -60,12 +60,12 @@ namespace MonoDragons.ZFS.CoreGame
         {
             if (CurrentData.Friendlies.All(x => x.State.IsDeceased) || CurrentData.MainCharacter.State.IsDeceased)
             {
-                EventQueue.Instance.Add(new GameOver());
+                Event.Queue(new GameOver());
                 _isGameOver = true;
             }
             else if (CurrentCharacter == e.Victim)
             {
-                EventQueue.Instance.Add(new ActionResolved());
+                Event.Queue(new ActionResolved());
             }
         }
     }

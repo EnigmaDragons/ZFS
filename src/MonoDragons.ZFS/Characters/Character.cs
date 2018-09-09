@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
+using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Physics;
 using MonoDragons.ZFS.Characters.GUI;
 using MonoDragons.ZFS.CoreGame;
@@ -71,7 +72,7 @@ namespace MonoDragons.ZFS.Characters
                 var oldStats = Stats.Snapshot();
                 Stats = Stats.WithMods(new CharacterStatsMods { Level = 1 });
                 State.Xp -= 100;
-                EventQueue.Instance.Add(new LevelledUp { Character = this, OldStats = oldStats });
+                Event.Queue(new LevelledUp { Character = this, OldStats = oldStats });
             }
         } 
 
@@ -80,7 +81,7 @@ namespace MonoDragons.ZFS.Characters
             Body.Path.Dequeue();
             Body.ShouldContinue = true;
             if (!Body.Path.Any() && !e.Character.State.IsDeceased)
-                EventQueue.Instance.Add(new MovementFinished());
+                Event.Queue(new MovementFinished());
         }
 
         internal void Notify(MovementConfirmed movement)
@@ -88,7 +89,7 @@ namespace MonoDragons.ZFS.Characters
             Body.Path = new Queue<Point>(movement.Path.Skip(1).ToList());
             Body.ShouldContinue = true;
             if (!Body.Path.Any())
-                EventQueue.Instance.Add(new MovementFinished());
+                Event.Queue(new MovementFinished());
         }
 
         internal void Notify(TilesSeen e) => State.SeeableTiles = e.SeeableTiles;
@@ -104,7 +105,7 @@ namespace MonoDragons.ZFS.Characters
             if (State.RemainingHealth <= 0 && !State.IsDeceased)
             {
                 State.IsDeceased = true;
-                EventQueue.Instance.Add(new CharacterDeceased { Victim = e.Target, Killer = e.Attacker });
+                Event.Queue(new CharacterDeceased { Victim = e.Target, Killer = e.Attacker });
             }
         }
 

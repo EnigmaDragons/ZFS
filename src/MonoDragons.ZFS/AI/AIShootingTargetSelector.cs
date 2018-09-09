@@ -24,7 +24,7 @@ namespace MonoDragons.ZFS.AI
 
         private void Shoot(Target target)
         {
-            EventQueue.Instance.Add(new RangedTargetInspected
+            Event.Queue(new RangedTargetInspected
             {
                 Attacker = CurrentData.CurrentCharacter,
                 Defender = target.Character,

@@ -14,7 +14,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
 
         public void UpdatePerception(Character character)
         {
-            EventQueue.Instance.Add(new TilesPerceived
+            Event.Queue(new TilesPerceived
             {
                 Character = character,
                 Tiles = new PointRadiusCalculation(character.CurrentTile.Position, character.Stats.Perception).Calculate()

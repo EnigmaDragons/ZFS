@@ -28,7 +28,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
                 options[ActionType.Overwatch] = () => Select(new OverwatchSelected());
             options[ActionType.Pass] = () => Select(new PassSelected());
 
-            EventQueue.Instance.Add(new ActionOptionsAvailable { Options = options });
+            Event.Queue(new ActionOptionsAvailable { Options = options });
         }
 
         private bool CanHide(Character character)
@@ -46,8 +46,8 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
         
         private void Select(object selection)
         {
-            EventQueue.Instance.Add(new ActionSelected(selection.GetType().Name.Replace("Selected", "")));
-            EventQueue.Instance.Add(selection);
+            Event.Queue(new ActionSelected(selection.GetType().Name.Replace("Selected", "")));
+            Event.Queue(selection);
         }
     }
 }

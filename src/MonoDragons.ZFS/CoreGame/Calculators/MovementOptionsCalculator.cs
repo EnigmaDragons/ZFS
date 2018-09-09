@@ -33,7 +33,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
         void CalculateMovement()
         {
             var basePath = new List<Point> { CurrentData.CurrentCharacter.CurrentTile.Position };
-            EventQueue.Instance.Add(new MovementOptionsAvailable
+            Event.Queue(new MovementOptionsAvailable
             {
                 AvailableMoves = RandomizeBetweenDuplicates(
                     EliminateDuplicatesThatCrossOverOverwatchedTiles(

@@ -95,8 +95,8 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
         {
             _eventQueue.Enqueue(() =>
             {
-                EventQueue.Instance.Add(new ShotFired {Attacker = attacker, Target = defender});
-                EventQueue.Instance.Add(new ShotHit {Attacker = attacker, Target = defender, DamageAmount = damage});
+                Event.Queue(new ShotFired {Attacker = attacker, Target = defender});
+                Event.Queue(new ShotHit {Attacker = attacker, Target = defender, DamageAmount = damage});
             });
         }
 
@@ -104,8 +104,8 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
         {
             _eventQueue.Enqueue(() =>
             {
-                EventQueue.Instance.Add(new ShotFired {Attacker = attacker, Target = defender});
-                EventQueue.Instance.Add(new ShotMissed {Attacker = attacker, Target = defender});
+                Event.Queue(new ShotFired {Attacker = attacker, Target = defender});
+                Event.Queue(new ShotMissed {Attacker = attacker, Target = defender});
             });
         }
 
@@ -113,8 +113,8 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
         {
             _eventQueue.Enqueue(() =>
             {
-                EventQueue.Instance.Add(new ShotFired {Attacker = attacker, Target = defender});
-                EventQueue.Instance.Add(new ShotBlocked {Attacker = attacker, Target = defender, Blocker = blocker});
+                Event.Queue(new ShotFired {Attacker = attacker, Target = defender});
+                Event.Queue(new ShotBlocked {Attacker = attacker, Target = defender, Blocker = blocker});
             });
         }
     }

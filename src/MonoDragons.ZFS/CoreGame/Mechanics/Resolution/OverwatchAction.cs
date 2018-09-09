@@ -28,12 +28,12 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
                     if (new HitChanceCalculation(CurrentData.CurrentCharacter.Accuracy, shot.BlockChance).Get() > 0)
                         overwatchedTiles[x] = shot;
                 });
-                EventQueue.Instance.Add(new OverwatchTilesAvailable { OverwatchedTiles = overwatchedTiles });
+                Event.Queue(new OverwatchTilesAvailable { OverwatchedTiles = overwatchedTiles });
             }
-            EventQueue.Instance.Add(new ActionReadied(() =>
+            Event.Queue(new ActionReadied(() =>
             {
                 CurrentData.CurrentCharacter.State.IsOverwatching = true;
-                EventQueue.Instance.Add(new ActionResolved());
+                Event.Queue(new ActionResolved());
             }));
         }
 

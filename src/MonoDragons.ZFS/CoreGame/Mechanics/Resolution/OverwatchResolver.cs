@@ -68,11 +68,11 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
                         x.State.OverwatchedTiles[_moved.Position]).CalculateShot()
                 })
                 .ToList();
-            Action action = () => EventQueue.Instance.Add(new MoveResolved { Character = _moved.Character });
+            Action action = () => Event.Queue(new MoveResolved { Character = _moved.Character });
             shots.ForEach(x =>
             {
                 x.OnFinished = action;
-                action = () => EventQueue.Instance.Add(x);
+                action = () => Event.Queue(x);
             });
             action();
         }

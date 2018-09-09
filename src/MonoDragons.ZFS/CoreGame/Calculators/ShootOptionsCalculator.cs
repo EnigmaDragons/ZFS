@@ -30,7 +30,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
                             : new ShotCoverInfo(new List<CoverProvided>())
                     }).ToList()
             };
-            EventQueue.Instance.Add(targetsAvailable);
+            Event.Queue(targetsAvailable);
         }
 
         private bool CanShoot(Character attacker, Character target)

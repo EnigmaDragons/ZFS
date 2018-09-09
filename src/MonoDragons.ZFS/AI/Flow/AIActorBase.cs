@@ -1,4 +1,5 @@
 ﻿using System;
+using MonoDragons.Core.EventSystem;
 using MonoDragons.ZFS.Characters;
 using MonoDragons.ZFS.CoreGame;
 using MonoDragons.ZFS.CoreGame.StateEvents;
@@ -12,7 +13,7 @@ namespace MonoDragons.ZFS.AI
         protected void IfAITurn(Action queueAction)
         {
             if (Char.Team.IsIncludedIn(TeamGroup.NeutralsAndEnemies))
-                EventQueue.Instance.Add(new AIActionQueued(queueAction));            
+                Event.Queue(new AIActionQueued(queueAction));            
         }
     }
 }

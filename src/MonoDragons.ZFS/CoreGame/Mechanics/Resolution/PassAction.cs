@@ -13,7 +13,7 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
 
         private void OnPassSelected(PassSelected e)
         {
-            EventQueue.Instance.Add(new ActionReadied(() =>
+            Event.Queue(new ActionReadied(() =>
             {
                 Event.Publish(new ActionResolved());
             }));

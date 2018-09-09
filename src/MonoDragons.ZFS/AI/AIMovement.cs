@@ -21,11 +21,11 @@ namespace MonoDragons.ZFS.AI
 
         private void ChooseMoveIfApplicable(MovementOptionsAvailable e)
         {
-            IfAITurn(() => EventQueue.Instance.Add(new AIActionQueued(() =>
+            IfAITurn(() => Event.Queue(new AIActionQueued(() =>
             {
                 if (Char.Team != Team.Enemy)
                     return;
-                EventQueue.Instance.Add(new MovementConfirmed(GetBestMovement(e.AvailableMoves)));
+                Event.Queue(new MovementConfirmed(GetBestMovement(e.AvailableMoves)));
             })));
         }
 

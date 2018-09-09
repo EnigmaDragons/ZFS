@@ -37,7 +37,7 @@ namespace MonoDragons.ZFS.AI
             if (CurrentMood == Mood.Stealth && _characterData.Where(x => !x.Key.State.IsDeceased).Any(x => x.Value.SeenEnemies.Any()))
             {
                 CurrentMood = Mood.Battle;
-                EventQueue.Instance.Add(new MoodChange { NewMood = CurrentMood });
+                Event.Queue(new MoodChange { NewMood = CurrentMood });
             }
         }
 
@@ -46,7 +46,7 @@ namespace MonoDragons.ZFS.AI
             if (CurrentMood == Mood.Battle && !_characterData.Where(x => !x.Key.State.IsDeceased).Any(x => x.Value.SeenEnemies.Any()))
             {
                 CurrentMood = Mood.Stealth;
-                EventQueue.Instance.Add(new MoodChange { NewMood = CurrentMood });
+                Event.Queue(new MoodChange { NewMood = CurrentMood });
             }
             if (e.Victim.IsFriendly)
                 _characterData.ForEach(x =>
