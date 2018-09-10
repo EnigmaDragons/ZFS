@@ -59,6 +59,8 @@
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Common\TrackingEvent.cs" />
     <Compile Include="Development\DevTextColor.cs" />
+    <Compile Include="Development\KeyboardControlView.cs" />
+    <Compile Include="Development\MouseControlView.cs" />
     <Compile Include="Development\RecentEventDebugLogView.cs" />
     <Compile Include="Development\VolumeDemo.cs" />
     <Compile Include="EngimaDragons\EnigmaDragonsResources.cs" />

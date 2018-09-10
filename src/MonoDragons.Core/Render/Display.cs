@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoDragons.Core.Engine;
+using MonoDragons.Core.Inputs;
 
 namespace MonoDragons.Core.Render
 {
@@ -13,6 +15,7 @@ namespace MonoDragons.Core.Render
         private int ProgramHeight { get; set; }
         public float Scale { get; private set; }
         private bool _initialized;
+        private GraphicsDeviceManager _graphicsDeviceManager;
 
         public Display(int width, int height, bool useFullscreen, float scale = 1)
         {
@@ -26,13 +29,13 @@ namespace MonoDragons.Core.Render
 
         public void Apply(GraphicsDeviceManager deviceManager)
         {
-            
+            _graphicsDeviceManager = deviceManager;
             if (!_initialized && UseFullscreen)
             {
                 
                 var widthScale = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / GameWidth;
                 var heightScale = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / GameHeight;
-                var newScaleModifier = Convert.ToInt32(Math.Min(heightScale, widthScale));
+                var newScaleModifier = Math.Min(heightScale, widthScale);
                 Scale = Scale * newScaleModifier;
                 GameWidth = GameWidth * newScaleModifier;
                 GameHeight = GameHeight * newScaleModifier;
@@ -41,10 +44,16 @@ namespace MonoDragons.Core.Render
                 _initialized = true;
             }
 
-            deviceManager.PreferredBackBufferWidth = ProgramWidth;
-            deviceManager.PreferredBackBufferHeight = ProgramHeight;
+            deviceManager.PreferredBackBufferWidth = GameWidth;
+            deviceManager.PreferredBackBufferHeight = GameHeight;
             deviceManager.IsFullScreen = UseFullscreen;
             deviceManager.ApplyChanges();
+        }
+
+        public void ToggleFullscreen()
+        {
+            _graphicsDeviceManager.IsFullScreen = !_graphicsDeviceManager.IsFullScreen;
+            _graphicsDeviceManager.ApplyChanges();
         }
     }
 }

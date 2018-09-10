@@ -154,7 +154,11 @@ namespace MonoDragons.Core.UserInterface
 
         private Point ScaleMousePosition(MouseState mouse)
         {
-            return new Point((int)Math.Round(mouse.Position.X / Scale), (int)Math.Round(mouse.Position.Y / Scale));
+            var raw = mouse.Position;
+            Logger.WriteLine($"MouseRaw: {raw.ToString()}");
+            var scaled = new Point((int)Math.Round(mouse.Position.X / Scale), (int)Math.Round(mouse.Position.Y / Scale));
+            Logger.WriteLine($"MouseScaled: {raw.ToString()}");
+            return scaled;
         }
 
         public void Dispose()

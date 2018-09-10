@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -20,6 +21,8 @@ namespace MonoDragons.Core.Engine
         private readonly IScene _scene;
         private readonly IController _controller;
         private readonly Metrics _metrics;
+        private readonly KeyboardControlView _keyboardDebug;
+        private readonly MouseControlView _mouseDebug;
         private readonly IErrorHandler _errorHandler;
         private readonly Display _display;
 
@@ -38,9 +41,11 @@ namespace MonoDragons.Core.Engine
             _controller = controller;
 #if DEBUG
             _metrics = new Metrics();
+            _keyboardDebug = new KeyboardControlView();
+            _mouseDebug = new MouseControlView();
 #endif
             Window.Title = title;
-            //((Form)Form.FromHandle(Window.Handle)).Closing += (o, e) => Environment.Exit(0);
+            ((Form)Form.FromHandle(Window.Handle)).Closing += (o, e) => Environment.Exit(0);
         }
 
         protected override void Initialize()
@@ -51,14 +56,14 @@ namespace MonoDragons.Core.Engine
                 {
                     CurrentGame.Init(this);
                     Resources.Init();
+                    Input.SetController(_controller);
                     // @todo #1 Bug: Update the GraphicsDeviceManager in the constructor, to avoid the window being mispositioned and visibly changing size
                     CurrentDisplay.Init(_graphics, _display);
                     Window.Position = new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - CurrentDisplay.GameWidth) / 2,
-                        (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - CurrentDisplay.GameHeight) / 2 - 40); // Delete this once the above issue is fixed
+                        (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - CurrentDisplay.GameHeight) / 2); // Delete this once the above issue is fixed
                     IsMouseVisible = true;
                     _uiSpriteBatch = new SpriteBatch(GraphicsDevice);
                     WorldSpriteBatch = new SpriteBatch(GraphicsDevice);
-                    Input.SetController(_controller);
                     World.Init(WorldSpriteBatch);
                     UI.Init(_uiSpriteBatch); 
                     _scene.Init();
@@ -100,6 +105,7 @@ namespace MonoDragons.Core.Engine
             try
             {
 #if DEBUG
+                _mouseDebug.Update(gameTime.ElapsedGameTime);
                 _metrics.Update(gameTime.ElapsedGameTime);
                 if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.OemTilde))
                     Environment.Exit(0);
@@ -122,7 +128,9 @@ namespace MonoDragons.Core.Engine
                 GraphicsDevice.Clear(Color.Black);
                 _scene.Draw();
 #if DEBUG
-                _metrics.Draw(Transform2.Zero);
+                _metrics.Draw();
+                _keyboardDebug.Draw();
+                _mouseDebug.Draw();
 #endif
                 WorldSpriteBatch.End();
                 _uiSpriteBatch.End();

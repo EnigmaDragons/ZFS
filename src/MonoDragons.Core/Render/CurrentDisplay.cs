@@ -6,7 +6,9 @@ namespace MonoDragons.Core.Render
     {
         private static GraphicsDeviceManager _graphics;
         private static Display _display;
-        public static Display Display {
+        public static Display Display
+        {
+            get => _display;
             set
             {
                 _display = value;

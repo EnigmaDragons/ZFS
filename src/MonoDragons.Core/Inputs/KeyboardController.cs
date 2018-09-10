@@ -67,6 +67,8 @@ namespace MonoDragons.Core.Inputs
                 .ForEach(x => NotifySubscribers(new ControlStateChanged(_controlBind[x], ControlState.Active)));
             releasedKeys.Where(x => _controlBind.ContainsKey(x))
                 .ForEach(x => NotifySubscribers(new ControlStateChanged(_controlBind[x], ControlState.Inactive)));
+            if (pressedKeys.Contains(Keys.F10))
+                Logger.WriteLine("F10 Pressed");
 
             if ((int)_currentDirection.HDir != (int)_lastDirection.HDir && _currentDirection.HDir == HorizontalDirection.Left)
                 NotifySubscribers(new ControlStateChanged(Control.Left, ControlState.Active));

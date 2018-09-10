@@ -37,7 +37,7 @@ namespace MonoDragons.ZFS
         static void Main()
         {
 #if DEBUG
-            RunGame("DarkAlley");
+            RunGame("Logo");
 #else
             RunGame("Logo");
 #endif
@@ -84,12 +84,12 @@ namespace MonoDragons.ZFS
         {
             var currentScene = new CurrentScene();
                 Scene.Init(new CurrentSceneNavigation(currentScene, CreateSceneFactory(),
-                    Input.ClearTransientBindings,
+                   // Input.ClearTransientBindings,
                     Resources.Unload, 
                     AudioPlayer.Instance.StopAll));
                 return new HideViewportExternals(currentScene);
         }
-
+        
         private static IController CreateKeyboardController()
         {
             return new KeyboardController(new Map<Keys, Control>
@@ -98,7 +98,8 @@ namespace MonoDragons.ZFS
                 { Keys.Enter, Control.Start },
                 { Keys.Escape, Control.Menu },
                 { Keys.V, Control.A },
-                { Keys.O, Control.X }
+                { Keys.O, Control.X },
+                { Keys.F10, Control.Fullscreen }
             });
         }
     }

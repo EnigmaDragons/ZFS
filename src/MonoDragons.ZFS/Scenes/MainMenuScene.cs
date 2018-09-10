@@ -4,6 +4,7 @@ using MonoDragons.Core.Animations;
 using MonoDragons.Core.AudioSystem;
 using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Physics;
+using MonoDragons.Core.Render;
 using MonoDragons.Core.Scenes;
 using MonoDragons.Core.UserInterface;
 using MonoDragons.ZFS.CoreGame;
@@ -26,6 +27,7 @@ namespace MonoDragons.ZFS.Scenes
             Input.On(Control.Menu, () => Environment.Exit(0));
             Input.On(Control.Start, StartNewGame);
             Input.On(Control.Select, StartNewGame);
+            Input.On(Control.Fullscreen, () => CurrentDisplay.Display.ToggleFullscreen());
             Sound.Music("main-theme", 0.4f).Play();
             Add(new UiImage { Image = "Backgrounds/mainmenu-bg", Transform = new Transform2(new Size2(1920, 1080)) });
             Add(new ColoredRectangle { Color = UiColors.MainMenuScene_Background, Transform = new Transform2(new Size2(1920, 1080)) });

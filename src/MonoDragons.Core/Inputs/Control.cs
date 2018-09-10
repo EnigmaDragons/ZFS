@@ -13,5 +13,6 @@
         Select,
         Start,
         Menu,
+        Fullscreen
     }
 }

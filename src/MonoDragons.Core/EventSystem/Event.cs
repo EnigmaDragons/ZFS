@@ -26,6 +26,11 @@ namespace MonoDragons.Core.EventSystem
             PersistentEvents.Publish(payload);
         }
 
+        public static void SubscribeForever<T>(Action<T> onEvent, object owner)
+        {
+            SubscribeForever(EventSubscription.Create<T>(onEvent, owner));
+        }
+        
         public static void SubscribeForever(EventSubscription subscription)
         {
             PersistentEvents.Subscribe(subscription);
