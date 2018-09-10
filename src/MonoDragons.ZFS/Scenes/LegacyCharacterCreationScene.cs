@@ -13,14 +13,14 @@ using MonoDragons.ZFS.Themes;
 
 namespace MonoDragons.ZFS.Scenes
 {
-    public class CharacterCreationScene : ClickUiScene
+    public class LegacyCharacterCreationScene : ClickUiScene
     {
         private readonly string _nextSceneName;
         private ChoiceUI _activeChoice;
         private readonly IAnimation _fadeOut;
         private bool _selected;
 
-        public CharacterCreationScene(string nextSceneName)
+        public LegacyCharacterCreationScene(string nextSceneName)
         {
             _nextSceneName = nextSceneName;
             _fadeOut = new ScreenFade { Duration = TimeSpan.FromSeconds(1), FromAlpha = 0, ToAlpha = 255};
@@ -67,7 +67,7 @@ namespace MonoDragons.ZFS.Scenes
             
             _selected = true;
             Buttons.PlayClickSound();
-            CurrentData.MainCharClass = new CharacterClass { WeaponSet = set };
+            CurrentData.MainCharClass = new Leader { WeaponSet = set };
             _fadeOut.Start(() => Scene.NavigateTo(_nextSceneName));
         }
         

@@ -33,7 +33,7 @@ namespace MonoDragons.ZFS.CoreGame
         internal static HighHighlights HighHighlights { get; set; }
         internal static Point HoveredTile { get; set; } = new Point(0, 0);
 
-        internal static CharacterClass MainCharClass { get; set; } = new CharacterClass();
+        internal static CharacterClass MainCharClass { get; set; } = new Leader();
         internal static Character MainCharacter => Level.FriendliesWhere(x => x.Stats.Name.Equals(MainChar.Name)).Single();
         
         // TODO: Change Load Process to be holistic.

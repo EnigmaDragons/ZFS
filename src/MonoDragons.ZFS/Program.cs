@@ -51,7 +51,7 @@ namespace MonoDragons.ZFS
                 { "Logo", () => new LogoScene("MainMenu") },
                 { "MainMenu", () => new MainMenuScene("Intro") },
                 { "Intro", () => new IntroCutscene("CharacterCreation") },
-                { "CharacterCreation", () => new CharacterCreationScene("DarkAlley") },
+                { "CharacterCreation", () => new LegacyCharacterCreationScene("DarkAlley") },
                 { "SampleLevel", () => new GameLevel("SampleCorporate.tmx") },
                 { "ShootingRange", () => new GameLevel("TestFogOfWar.tmx") },
                 { "DarkAlley", () => new GameLevel("DarkAlley.tmx", new LevelMusic("alley-amb", "alley-action-loop", "alley-action-loop", 0.6f, 0.34f, 0.34f)) },

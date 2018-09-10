@@ -7,5 +7,10 @@
         Rifle,
         Assault,
         Pad,
+        Shield,
+        Shotgun,
+        Medkit,
+        Grenade,
+        Baton
     }
 }
