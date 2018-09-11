@@ -5,7 +5,7 @@ using System.Linq;
 namespace MonoDragons
 {
     public static class EnumerableExtensions
-    {
+    {       
         public static List<T> AsList<T>(this T item) => new List<T>(1) { item };
                 
         public static TItem Added<TCollectionItem, TItem>(this List<TCollectionItem> list, TItem item)

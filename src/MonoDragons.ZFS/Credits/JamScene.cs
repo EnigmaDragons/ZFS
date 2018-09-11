@@ -35,10 +35,10 @@ namespace MonoDragons.ZFS.Credits
         {
         }
 
-        public void Draw()
+        public void Draw(Transform2 parentTransform)
         {
             DrawBackground();
-            _visuals.ForEach(x => x.Draw(Transform2.Zero));
+            _visuals.ForEach(x => x.Draw(parentTransform));
             DrawForeground();
         }
 

@@ -1,11 +1,9 @@
 ﻿using System;
+using MonoDragons.Core.Engine;
 
 namespace MonoDragons.Core.Scenes
 {
-    public interface IScene: IDisposable
+    public interface IScene: IDisposable, IInitializable, IVisual, IAutomaton
     {
-        void Init();
-        void Update(TimeSpan delta);
-        void Draw();
     }
 }

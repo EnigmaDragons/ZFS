@@ -67,6 +67,9 @@
     <Compile Include="Development\RecentEventDebugLogView.cs" />
     <Compile Include="Development\VolumeDemo.cs" />
     <Compile Include="EngimaDragons\EnigmaDragonsResources.cs" />
+    <Compile Include="Engine\GameRoot.cs" />
+    <Compile Include="Engine\IInitializableVisualAutomaton.cs" />
+    <Compile Include="Engine\MonoDragonsGame.cs" />
     <Compile Include="Engine\Nothing.cs" />
     <Compile Include="Engine\GameObjContainer.cs" />
     <Compile Include="Errors\Error.cs" />
@@ -121,7 +124,6 @@
     <Compile Include="Scenes\IScene.cs" />
     <Compile Include="Engine\IAutomaton.cs" />
     <Compile Include="Engine\IVisual.cs" />
-    <Compile Include="Engine\NeedlesslyComplexMainGame.cs" />
     <Compile Include="Scenes\PlaceholderScene.cs" />
     <Compile Include="Scenes\SceneContents.cs" />
     <Compile Include="Scenes\SceneFactory.cs" />

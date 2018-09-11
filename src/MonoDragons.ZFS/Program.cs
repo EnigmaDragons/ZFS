@@ -6,6 +6,7 @@ using MonoDragons.Core.Engine;
 using MonoDragons.Core.Errors;
 using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Memory;
+using MonoDragons.Core.Physics;
 using MonoDragons.Core.Render;
 using MonoDragons.Core.Scenes;
 using MonoDragons.Core.Text;
@@ -37,7 +38,7 @@ namespace MonoDragons.ZFS
         static void Main()
         {
 #if DEBUG
-            RunGame("DarkAlley");
+            RunGame("Logo");
 #else
             RunGame("Logo");
 #endif
@@ -65,9 +66,8 @@ namespace MonoDragons.ZFS
             try
             {
                 using (var game = Perf.Time("Startup", 
-                    () => new NeedlesslyComplexMainGame(AppDetails.Name, sceneName, new Display(1600, 900, false), 
-                        SetupScene(), CreateKeyboardController(), ErrorHandler, Tools())))
-                            game.Run();
+                    () => new MonoDragonsGame(AppDetails.Name, sceneName, new Display(1600, 900, false), ErrorHandler, CreateGameRoot())))
+                        game.Run();
             }
             catch(Exception e)
             {
@@ -89,28 +89,54 @@ namespace MonoDragons.ZFS
             return new Dummy();
 #endif
         }
+
+        private static GameRoot CreateGameRoot()
+        {
+            var objs = new object[]
+            {
+                SetupInGameKeyboardController(),
+                SetupPermanentController(),
+                SetupScene(),
+                Tools(),
+            };
+            return new GameRoot(objs);
+        }
         
         private static IScene SetupScene()
         {
             var currentScene = new CurrentScene();
                 Scene.Init(new CurrentSceneNavigation(currentScene, CreateSceneFactory(),
-                   // Input.ClearTransientBindings,
+                    Input.ClearTransientBindings,
                     Resources.Unload, 
                     AudioPlayer.Instance.StopAll));
                 return new HideViewportExternals(currentScene);
         }
-        
-        private static IController CreateKeyboardController()
+
+        private static IController SetupPermanentController()
         {
-            return new KeyboardController(new Map<Keys, Control>
+            var ctrl = new KeyboardController(new Map<Keys, HorizontalDirection>(), new Map<Keys, VerticalDirection>(), new Map<Keys, Control>
+            {
+                {Keys.OemTilde, Control.Exit},
+                {Keys.F10, Control.Fullscreen},
+            });
+            Input.SetPermanentController(ctrl);
+            Input.OnForever(Control.Exit, () => Environment.Exit(0));
+            Input.OnForever(Control.Fullscreen, () => CurrentDisplay.Display.ToggleFullscreen());
+            return ctrl;
+        }
+        
+        private static IController SetupInGameKeyboardController()
+        {
+            var ctrl = new KeyboardController(new Map<Keys, Control>
             {
                 { Keys.Space, Control.Select },
                 { Keys.Enter, Control.Start },
                 { Keys.Escape, Control.Menu },
                 { Keys.V, Control.A },
-                { Keys.O, Control.X },
-                { Keys.F10, Control.Fullscreen }
+                { Keys.O, Control.X }
             });
+            Input.SetController(ctrl);
+            return ctrl;
         }
     }
 }

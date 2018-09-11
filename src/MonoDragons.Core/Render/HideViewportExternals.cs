@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoDragons.Core.Graphics;
 using MonoDragons.Core.Scenes;
 using System;
+using MonoDragons.Core.Physics;
 
 namespace MonoDragons.Core.Render
 {
@@ -27,9 +28,9 @@ namespace MonoDragons.Core.Render
             _inner.Update(delta);
         }
 
-        public void Draw()
+        public void Draw(Transform2 transform)
         {
-            _inner.Draw();
+            _inner.Draw(transform);
             HideExternals();
         }
 

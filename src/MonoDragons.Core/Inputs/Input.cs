@@ -6,7 +6,31 @@ namespace MonoDragons.Core.Inputs
     public static class Input
     {
         private static IController _controller;
+        private static IController _permanentController;
 
+        public static void SetPermanentController(IController controller)
+        {
+            _permanentController = controller;
+        }
+        
+        public static void OnForever(Control control, Action onPress)
+        {
+            OnForever(control, onPress, () => { });
+        }
+
+        public static void OnForever(Control control, Action onPress, Action onRelease)
+        {            
+            Event.SubscribeForever<ControlStateChanged>(c =>
+            {
+                if (!c.Control.Equals(control))
+                    return;
+                if (c.State.Equals(ControlState.Active))
+                    onPress();
+                else if (c.State.Equals(ControlState.Inactive))
+                    onRelease();
+            }, _permanentController);
+        }
+        
         public static void SetController(IController controller)
         {
             _controller = controller;

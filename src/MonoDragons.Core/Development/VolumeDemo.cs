@@ -47,7 +47,7 @@ namespace MonoDragons.Core.Scenes
             _clickUi.Update(delta);
         }
 
-        public void Draw()
+        public void Draw(Transform2 parentTransform)
         {
             _visuals.ForEach(x => x.Draw(Transform2.Zero));
         }

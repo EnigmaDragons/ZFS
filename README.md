@@ -1,6 +1,6 @@
 # ZFS
 
-[![Build status](https://ci.appveyor.com/api/projects/status/hm595pmcdk7vaybg/branch/master?svg=true)](https://ci.appveyor.com/project/EnigmaDragons/zfs/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/as5t89dv77k25ma9/branch/master?svg=true)](https://ci.appveyor.com/project/EnigmaDragons/zfs-x34p2/branch/master)
 
 
 ----

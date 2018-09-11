@@ -1,4 +1,5 @@
 ﻿using System;
+using MonoDragons.Core.Physics;
 
 namespace MonoDragons.Core.Scenes
 {
@@ -21,9 +22,9 @@ namespace MonoDragons.Core.Scenes
             Value.Update(delta);
         }
 
-        public void Draw()
+        public void Draw(Transform2 parentTransform)
         {
-            Value.Draw();
+            Value.Draw(parentTransform);
         }
 
         public void Dispose()

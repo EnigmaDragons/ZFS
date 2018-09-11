@@ -13,6 +13,7 @@
         Select,
         Start,
         Menu,
-        Fullscreen
+        Fullscreen,
+        Exit
     }
 }

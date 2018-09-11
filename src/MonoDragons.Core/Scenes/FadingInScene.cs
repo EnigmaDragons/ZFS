@@ -47,9 +47,9 @@ namespace MonoDragons.Core.Scenes
             _scene.Update(delta);
         }
 
-        public void Draw()
+        public void Draw(Transform2 parentTransform)
         {
-            _scene.Draw();
+            _scene.Draw(parentTransform);
 
             if (!_transitionComplete)
                 _fade.Draw(Transform2.Zero);
