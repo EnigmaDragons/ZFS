@@ -37,7 +37,7 @@ namespace MonoDragons.ZFS
         static void Main()
         {
 #if DEBUG
-            RunGame("Logo");
+            RunGame("DarkAlley");
 #else
             RunGame("Logo");
 #endif
@@ -65,8 +65,9 @@ namespace MonoDragons.ZFS
             try
             {
                 using (var game = Perf.Time("Startup", 
-                    () => new NeedlesslyComplexMainGame(AppDetails.Name, sceneName, new Display(1600, 900, false), SetupScene(), CreateKeyboardController(), ErrorHandler)))
-                        game.Run();
+                    () => new NeedlesslyComplexMainGame(AppDetails.Name, sceneName, new Display(1600, 900, false), 
+                        SetupScene(), CreateKeyboardController(), ErrorHandler, Tools())))
+                            game.Run();
             }
             catch(Exception e)
             {
@@ -80,6 +81,15 @@ namespace MonoDragons.ZFS
             }
         }
 
+        private static IVisualAutomaton Tools()
+        {
+#if DEBUG
+            return new DebugToolsLayout();
+#else
+            return new Dummy();
+#endif
+        }
+        
         private static IScene SetupScene()
         {
             var currentScene = new CurrentScene();

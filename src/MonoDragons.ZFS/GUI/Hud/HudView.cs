@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoDragons.Core.Engine;
 using MonoDragons.Core.Scenes;
 using MonoDragons.Core.UserInterface;
 using MonoDragons.ZFS.GUI.Hud;
@@ -7,7 +8,7 @@ using MonoDragons.ZFS.GUI.Views;
 
 namespace MonoDragons.ZFS.GUI
 {
-    class HudView : SceneContainer
+    class HudView : GameObjContainer
     {
         public HudView(ClickUI clickUi) : base(true)
         {

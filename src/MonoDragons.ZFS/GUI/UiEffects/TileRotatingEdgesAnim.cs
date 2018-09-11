@@ -8,7 +8,7 @@ using MonoDragons.ZFS.Tiles;
 
 namespace MonoDragons.ZFS.GUI
 {
-    class TileRotatingEdgesAnim : SceneContainer, IInitializable
+    class TileRotatingEdgesAnim : GameObjContainer, IInitializable
     {
         private MustInit<SpriteAnimation> _anim = new MustInit<SpriteAnimation>($"{nameof(TileRotatingEdgesAnim)}.{nameof(_anim)}");
         private Color _color;

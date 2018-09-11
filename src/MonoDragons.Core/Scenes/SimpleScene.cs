@@ -1,8 +1,9 @@
-﻿using MonoDragons.Core.Physics;
+﻿using MonoDragons.Core.Engine;
+using MonoDragons.Core.Physics;
 
 namespace MonoDragons.Core.Scenes
 {
-    public abstract class SimpleScene : SceneContainer, IScene
+    public abstract class SimpleScene : GameObjContainer, IScene
     {
         public abstract void Init();
         public virtual void Dispose() {  }

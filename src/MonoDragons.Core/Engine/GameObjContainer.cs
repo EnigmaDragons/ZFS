@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using MonoDragons.Core.Development;
-using MonoDragons.Core.Engine;
 using MonoDragons.Core.Physics;
 
-namespace MonoDragons.Core.Scenes
+namespace MonoDragons.Core.Engine
 {
-    public abstract class SceneContainer : IVisualAutomaton
+    public abstract class GameObjContainer : IVisualAutomaton
     {
         private readonly List<IVisual> _visuals = new List<IVisual>();
         private readonly List<IAutomaton> _automata = new List<IAutomaton>();
@@ -20,10 +19,10 @@ namespace MonoDragons.Core.Scenes
         protected void Add(IAutomaton automaton) => OnlyDuringInit(() => _automata.Add(automaton));
         protected void Add(object actor) => OnlyDuringInit(() => _actors.Add(actor));
         
-        public SceneContainer()
+        public GameObjContainer()
             : this(false) { }
 
-        public SceneContainer(bool useAbsolutePosition)
+        public GameObjContainer(bool useAbsolutePosition)
         {
             _useAbsolutePosition = useAbsolutePosition;
             GetOffset = () => Transform2.Zero;

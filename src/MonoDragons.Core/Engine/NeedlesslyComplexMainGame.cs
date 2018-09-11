@@ -20,30 +20,24 @@ namespace MonoDragons.Core.Engine
         private readonly GraphicsDeviceManager _graphics;
         private readonly IScene _scene;
         private readonly IController _controller;
-        private readonly Metrics _metrics;
-        private readonly KeyboardControlView _keyboardDebug;
-        private readonly MouseControlView _mouseDebug;
         private readonly IErrorHandler _errorHandler;
+        private readonly IVisualAutomaton _tools;
         private readonly Display _display;
 
         public static SpriteBatch WorldSpriteBatch;
         private SpriteBatch _uiSpriteBatch;
 
         public NeedlesslyComplexMainGame(string title, string startingViewName, Display display,
-            IScene scene, IController controller, IErrorHandler errorHandler)
+            IScene scene, IController controller, IErrorHandler errorHandler, IVisualAutomaton tools)
         {
             _display = display;
             _errorHandler = errorHandler;
+            _tools = tools;
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             _startingViewName = startingViewName;
             _scene = scene;
             _controller = controller;
-#if DEBUG
-            _metrics = new Metrics();
-            _keyboardDebug = new KeyboardControlView();
-            _mouseDebug = new MouseControlView();
-#endif
             Window.Title = title;
             ((Form)Form.FromHandle(Window.Handle)).Closing += (o, e) => Environment.Exit(0);
         }
@@ -104,14 +98,12 @@ namespace MonoDragons.Core.Engine
         {
             try
             {
-#if DEBUG
-                _mouseDebug.Update(gameTime.ElapsedGameTime);
-                _metrics.Update(gameTime.ElapsedGameTime);
+                var elapsed = gameTime.ElapsedGameTime;
                 if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.OemTilde))
                     Environment.Exit(0);
-#endif
-                _controller.Update(gameTime.ElapsedGameTime);
-                _scene.Update(gameTime.ElapsedGameTime);
+                _tools.Update(elapsed);
+                _controller.Update(elapsed);
+                _scene.Update(elapsed);
             }
             catch (Exception e)
             {
@@ -127,11 +119,7 @@ namespace MonoDragons.Core.Engine
                 WorldSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
                 GraphicsDevice.Clear(Color.Black);
                 _scene.Draw();
-#if DEBUG
-                _metrics.Draw();
-                _keyboardDebug.Draw();
-                _mouseDebug.Draw();
-#endif
+                _tools.Draw();
                 WorldSpriteBatch.End();
                 _uiSpriteBatch.End();
             }

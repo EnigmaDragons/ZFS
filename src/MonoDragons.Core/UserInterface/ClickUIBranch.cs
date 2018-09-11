@@ -123,10 +123,9 @@ namespace MonoDragons.Core.UserInterface
             _elements.Clear();
         }
 
-        public ClickableUIElement GetElement(Point mousePosition)
+        public ClickableUIElement GetElement(Point point)
         {
-            var position = new Point((int)Math.Round(mousePosition.X / Scale), (int)Math.Round(mousePosition.Y / Scale));
-            var element = _elements.FirstOrDefault(x => x.TotalArea.Contains(position) && x.IsEnabled);
+            var element = _elements.FirstOrDefault(x => x.TotalArea.Contains(point) && x.IsEnabled);
             _currentElement = element ?? ClickUI.None;
             return _currentElement;
         }

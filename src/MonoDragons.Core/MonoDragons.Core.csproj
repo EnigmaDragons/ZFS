@@ -58,12 +58,17 @@
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Common\TrackingEvent.cs" />
+    <Compile Include="Development\DebugToolsLayout.cs" />
     <Compile Include="Development\DevTextColor.cs" />
+    <Compile Include="Development\DisplayDetailsView.cs" />
+    <Compile Include="Development\HoveredElementView.cs" />
     <Compile Include="Development\KeyboardControlView.cs" />
     <Compile Include="Development\MouseControlView.cs" />
     <Compile Include="Development\RecentEventDebugLogView.cs" />
     <Compile Include="Development\VolumeDemo.cs" />
     <Compile Include="EngimaDragons\EnigmaDragonsResources.cs" />
+    <Compile Include="Engine\Nothing.cs" />
+    <Compile Include="Engine\GameObjContainer.cs" />
     <Compile Include="Errors\Error.cs" />
     <Compile Include="Common\Map.cs" />
     <Compile Include="Common\MustInit.cs" />
@@ -78,6 +83,7 @@
     <Compile Include="Examples\SimpleLogoScene.cs" />
     <Compile Include="Examples\SimpleMainMenuScene.cs" />
     <Compile Include="Inputs\DirectionChanged.cs" />
+    <Compile Include="Inputs\ScaledMouse.cs" />
     <Compile Include="Physics\Engine\Physics.cs" />
     <Compile Include="Physics\Engine\PhysicsInstance.cs" />
     <Compile Include="Physics\HorizontalDirection.cs" />
@@ -87,7 +93,6 @@
     <Compile Include="Render\World.cs" />
     <Compile Include="Scenes\ClickUiScene.cs" />
     <Compile Include="Scenes\LoadingScene.cs" />
-    <Compile Include="Scenes\SceneContainer.cs" />
     <Compile Include="Scenes\SimpleScene.cs" />
     <Compile Include="Text\ScaledSpriteFontSet.cs" />
     <Compile Include="UserInterface\ActiveElementChanged.cs" />
@@ -184,8 +189,7 @@
     <Compile Include="UserInterface\Sprite.cs" />
     <Compile Include="Text\DefaultFont.cs" />
     <Compile Include="UserInterface\ImageButton.cs" />
-    <Compile Include="UserInterface\NoneClickableUIElement.cs" />
-    <Compile Include="UserInterface\Nothing.cs" />
+    <Compile Include="UserInterface\NoElement.cs" />
     <Compile Include="UserInterface\OffsetClickableUIElement.cs" />
     <Compile Include="UserInterface\ScreenClickable.cs" />
     <Compile Include="UserInterface\ScrollableElements.cs" />

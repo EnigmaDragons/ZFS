@@ -5,7 +5,6 @@ using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Memory;
 using MonoDragons.Core.Physics;
-using MonoDragons.Core.Render;
 using MonoDragons.Core.UserInterface;
 
 namespace MonoDragons.Core.Development
@@ -39,7 +38,6 @@ namespace MonoDragons.Core.Development
             UI.DrawText($"UPS: {_updatesPerSecond}", new Vector2(0, 22), color, font);
             UI.DrawText($"Sub: {Event.SubscriptionCount}", new Vector2(0, 44), color, font);
             UI.DrawText($"Scn: {Resources.CurrentSceneResourceCount}", new Vector2(0, 66), color, font);
-            UI.DrawText($"Scl: {CurrentDisplay.Scale}", new Vector2(0, 88), color, font);
             _framesThisSecond++;
         }
 

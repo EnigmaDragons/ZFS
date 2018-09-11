@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Development;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
+using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Physics;
 using MonoDragons.Core.Render;
 using MonoDragons.Core.Scenes;
@@ -18,7 +19,7 @@ using Camera = MonoDragons.ZFS.GUI.Camera;
 
 namespace MonoDragons.ZFS.CoreGame
 {
-    public class TacticsGame : SceneContainer, IInitializable
+    public class TacticsGame : GameObjContainer, IInitializable
     {
         private enum MouseAction
         {
@@ -105,10 +106,10 @@ namespace MonoDragons.ZFS.CoreGame
 
         public override void Update(TimeSpan delta)
         {
-            var mouse = Mouse.GetState();
+            var mouse = ScaledMouse.GetState();
             if (CurrentGame.TheGame.IsActive)
             {
-                var positionOnMap = new Point((int)Math.Round(mouse.Position.X / CurrentDisplay.Scale), (int)Math.Round(mouse.Position.Y / CurrentDisplay.Scale)) + _camera.Position;
+                var positionOnMap = mouse.Position + _camera.Position;
                 var tilePoint = CurrentData.Map.MapPositionToTile(positionOnMap.ToVector2());
                 CurrentData.HoveredTile = tilePoint;
 

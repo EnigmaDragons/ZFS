@@ -2,9 +2,9 @@
 
 namespace MonoDragons.Core.UserInterface
 {
-    public sealed class NoneClickableUIElement : ClickableUIElement
+    public sealed class NoElement : ClickableUIElement
     {
-        public NoneClickableUIElement() : base(new Rectangle(0, 0, 1920, 1080))
+        public NoElement() : base(new Rectangle(0, 0, 1920, 1080))
         {
         }
 

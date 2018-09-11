@@ -5,17 +5,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
+using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Render;
 
 namespace MonoDragons.Core.UserInterface
 {
     public sealed class ClickUI : IAutomaton, IDisposable
     {
-        public static readonly ClickableUIElement None = new NoneClickableUIElement();
+        public static readonly ClickableUIElement None = new NoElement();
 
         private List<ClickUIBranch> _branches = new List<ClickUIBranch> { new ClickUIBranch("Base", 0) };
-        
-        private float Scale => CurrentDisplay.Scale;
         
         private ClickableUIElement _current = None;
         private bool _wasClicked;
@@ -80,7 +79,7 @@ namespace MonoDragons.Core.UserInterface
 
         public void Update(TimeSpan delta)
         {
-            var mouse = Mouse.GetState();
+            var mouse = ScaledMouse.GetState();
             if (MouseIsOutOfGame(mouse) || !CurrentGame.TheGame.IsActive)
                 return;
             
@@ -147,18 +146,9 @@ namespace MonoDragons.Core.UserInterface
 
         private ClickableUIElement GetElement(MouseState mouse)
         {
-            var position = ScaleMousePosition(mouse);
+            var position = mouse.Position;
             var branch = _branches.Find((b) => b.GetElement(position) != None);
             return branch != null ? branch.GetElement(position) : None;
-        }
-
-        private Point ScaleMousePosition(MouseState mouse)
-        {
-            var raw = mouse.Position;
-            Logger.WriteLine($"MouseRaw: {raw.ToString()}");
-            var scaled = new Point((int)Math.Round(mouse.Position.X / Scale), (int)Math.Round(mouse.Position.Y / Scale));
-            Logger.WriteLine($"MouseScaled: {raw.ToString()}");
-            return scaled;
         }
 
         public void Dispose()

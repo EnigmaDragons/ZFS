@@ -4,7 +4,7 @@ using MonoDragons.Core.UserInterface;
 
 namespace MonoDragons.Core.Scenes
 {
-    public abstract class ClickUiScene : SceneContainer, IScene
+    public abstract class ClickUiScene : GameObjContainer, IScene
     {
         protected ClickUI ClickUi = new ClickUI();
 
