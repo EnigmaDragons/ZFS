@@ -55,17 +55,17 @@ namespace MonoDragons.ZFS.GUI
             _shots.Add(new MissedShotVisual(
                 new RectangleTexture(UiColors.Gunshot).Create(), 
                 CalculateTransform(e.Attacker, e.Target, (_random.Next(0, 1) == 0 ? -1 : 1) * _random.Next(2, 5) * 0.1),
-                e.Attacker.CurrentTile.Position));
+                e.Attacker,
+                e.Target));
         }
 
         private void OnShotBlocked(ShotBlocked e)
         {
             _shots.Add(new BlockedShotVisual(
                 new RectangleTexture(UiColors.Gunshot).Create(),
-                CalculateTransform(
-                    e.Attacker, 
-                    e.Blocker.Transform.Center(), 
-                    _random.Next(-100, 100) * 0.001),
+                CalculateTransform(e.Attacker, e.Blocker.Transform.Center(), _random.Next(-100, 100) * 0.001),
+                e.Attacker,
+                e.Target,
                 e.Blocker.Position));
         }
 
@@ -92,16 +92,20 @@ namespace MonoDragons.ZFS.GUI
         {
             private readonly Texture2D _texture;
             private readonly Transform2 _transform;
+            private readonly Character _attacker;
+            private readonly Character _target;
             private double _distanceTravled = 0;
             private Point _tile;
             public bool IsDone { get; private set; }
             private bool _publishedEvent;
 
-            public MissedShotVisual(Texture2D texture, Transform2 transform, Point shootPoint)
+            public MissedShotVisual(Texture2D texture, Transform2 transform, Character attacker, Character target)
             {
                 _texture = texture;
                 _transform = transform;
-                _tile = shootPoint;
+                _attacker = attacker;
+                _target = target;
+                _tile = attacker.CurrentTile.Position;
             }
 
             public void Update(TimeSpan delta)
@@ -113,7 +117,7 @@ namespace MonoDragons.ZFS.GUI
 
                 if (!_publishedEvent && (_distanceTravled > 50 || IsDone))
                 {
-                    Event.Publish(new AttackAnimationsFinished());
+                    Event.Queue(new AttackAnimationsFinished(_attacker, _target));
                     _publishedEvent = true;
                 }
             }
@@ -168,7 +172,7 @@ namespace MonoDragons.ZFS.GUI
 
                 if (!_publishedEvent && (_distanceTravled > 50 || IsDone))
                 {
-                    Event.Publish(new AttackAnimationsFinished { Attacker = _attacker, Target = _target });
+                    Event.Queue(new AttackAnimationsFinished(_attacker, _target));
                     _publishedEvent = true;
                 }
             }
@@ -200,29 +204,33 @@ namespace MonoDragons.ZFS.GUI
         {
             private readonly Texture2D _texture;
             private readonly Transform2 _transform;
-            private readonly Point _target;
+            private readonly Character _attacker;
+            private readonly Character _target;
+            private readonly Point _destination;
             private double _distanceTraveled = 0;
             private Point _tile;
             public bool IsDone { get; private set; }
             private bool _publishedEvent;
 
-            public BlockedShotVisual(Texture2D texture, Transform2 transform, Point target)
+            public BlockedShotVisual(Texture2D texture, Transform2 transform, Character attacker, Character target, Point blockLocation)
             {
                 _texture = texture;
                 _transform = transform;
+                _attacker = attacker;
                 _target = target;
+                _destination = blockLocation;
             }
 
             public void Update(TimeSpan delta)
             {
                 var distance = delta.TotalMilliseconds * TravelSpeed;
                 _distanceTraveled += distance;
-                if (_tile == _target)
+                if (_tile == _destination)
                     IsDone = true;
 
                 if (!_publishedEvent && (_distanceTraveled > 50 || IsDone))
                 {
-                    Event.Publish(new AttackAnimationsFinished());
+                    Event.Queue(new AttackAnimationsFinished(_attacker, _target));
                     _publishedEvent = true;
                 }
             }

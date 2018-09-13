@@ -30,6 +30,7 @@ namespace MonoDragons.ZFS.GUI.Hud
             _chatBox = new ChatBox(_dialogs[_index].Message, 400, GuiFonts.BodySpriteFont, 40, 40) { Position = new Vector2(625, 245), Color = UiColors.InGame_Text};
             _faceImage = new UiImage { Image = _dialogs[_index].CharacterImage, Transform = new Transform2(new Rectangle(375, 225, 250, 250))};
             Input.On(Control.Start, Advance);
+            Input.On(Control.Select, Skip);
             Branch.Add(new ScreenClickable(Advance));
         }
 
@@ -54,6 +55,11 @@ namespace MonoDragons.ZFS.GUI.Hud
                 _chatBox.ShowMessage(_dialogs[++_index].Message);
             else
                 _chatBox.CompletelyDisplayMessage();
+        }
+
+        private void Skip()
+        {
+            IsDone = true;
         }
     }
 

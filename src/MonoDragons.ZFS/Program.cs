@@ -38,7 +38,7 @@ namespace MonoDragons.ZFS
         static void Main()
         {
 #if DEBUG
-            RunGame("Logo");
+            RunGame("DarkAlley");
 #else
             RunGame("Logo");
 #endif

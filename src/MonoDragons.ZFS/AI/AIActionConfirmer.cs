@@ -12,7 +12,7 @@ namespace MonoDragons.ZFS.AI
             Event.Subscribe<ActionReadied>(e => IfAITurn(() => Event.Publish(new AIActionQueued(
                 () => Event.Publish(new ActionConfirmed()),
                 CurrentData.FriendlyPerception[CurrentData.CurrentCharacter.CurrentTile.Position]
-                    ? TimeSpan.FromSeconds(2.5f)
+                    ? TimeSpan.FromSeconds(1.0f)
                     : TimeSpan.FromMilliseconds(0)))), this);
         }
     }

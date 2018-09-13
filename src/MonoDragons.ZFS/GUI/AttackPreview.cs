@@ -24,6 +24,9 @@ namespace MonoDragons.ZFS.GUI
 
         private void DisplayPreview(ShotProposed e)
         {
+            if (!CurrentData.CurrentCharacter.IsFriendly)
+                return;
+            
             _hidden = false;
             _attackerSummary.Update(
                 e.Attacker.FaceImage, 
