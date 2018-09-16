@@ -6,13 +6,10 @@ using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Physics;
-using MonoDragons.Core.Render;
-using MonoDragons.Core.Scenes;
 using MonoDragons.Core.UserInterface;
 using MonoDragons.ZFS.AI;
 using MonoDragons.ZFS.CoreGame.Calculators;
 using MonoDragons.ZFS.CoreGame.Mechanics.Events;
-using MonoDragons.ZFS.CoreGame.Mechanics.Resolution;
 using MonoDragons.ZFS.CoreGame.StateEvents;
 using MonoDragons.ZFS.GUI;
 using Camera = MonoDragons.ZFS.GUI.Camera;
@@ -70,8 +67,6 @@ namespace MonoDragons.ZFS.CoreGame
             Add(new FriendlyVisionCalculator());
             Add(new NewEnemySpotter());
             Add(new DialogWatcher());
-            //TODO: trash class here
-            Add(new TargetKilledSceneTransition());
             Add(Event.UseQueue());
             Add(_drawMaster);
             Add(_combat);
@@ -84,6 +79,7 @@ namespace MonoDragons.ZFS.CoreGame
             CurrentData.HighHighlights = new HighHighlights();
             Add((IAutomaton)CurrentData.Highlights);
             Add((IAutomaton)CurrentData.HighHighlights);
+            Add(CurrentData.PrimaryObjective);
 
             CalculateInitVision(new VisibilityCalculator(), new PerceptionCalculator(), new FriendlyPerceptionUpdater());
             _combat.Init();

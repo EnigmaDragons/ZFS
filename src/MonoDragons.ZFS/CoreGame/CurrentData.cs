@@ -14,7 +14,8 @@ namespace MonoDragons.ZFS.CoreGame
         private static GameData GameData { get; set; }
         private static MustInit<LevelState> LevelState { get; } = new MustInit<LevelState>(nameof(LevelState));
         private static LevelState Level => LevelState.Get();
-        
+
+        internal static string LevelName => Level.Name;
         internal static GameMap Map => Level.Map;
         internal static PrimaryObjective PrimaryObjective => Level.PrimaryObjective;
         internal static Character CurrentCharacter => Level.CurrentCharacter;
@@ -40,7 +41,7 @@ namespace MonoDragons.ZFS.CoreGame
         // TODO: Change Load Process to be holistic.
         internal static void PartialLoad(GameMap map)
         {
-            LevelState.Init(new LevelState(map, new List<Character>(), new CharacterTurns(new Sidechick().AsList()), new DefeatAllEnemies()));
+            LevelState.Init(new LevelState("Loading", map, new List<Character>(), new CharacterTurns(new Sidechick().AsList()), new DefeatAllEnemies()));
         }
         
         internal static void Load(LevelState state)

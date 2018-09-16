@@ -8,7 +8,8 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
         {
             return new List<object>
             {
-                new GainXpOnEnemyDeath()
+                new GainXpOnEnemyDeath(),
+                new NavigateToMainMenuOnLevelCompleted()
             };
         }
     }

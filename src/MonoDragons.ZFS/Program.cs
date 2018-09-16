@@ -38,7 +38,7 @@ namespace MonoDragons.ZFS
         static void Main()
         {
 #if DEBUG
-            RunGame("DarkAlley");
+            RunGame("ObjectiveTest");
 #else
             RunGame("Logo");
 #endif
@@ -58,6 +58,7 @@ namespace MonoDragons.ZFS
                 { "DarkAlley", () => new GameLevel("DarkAlley.tmx", new LevelMusic("alley-amb", "alley-action-loop", "alley-action-loop", 0.6f, 0.34f, 0.34f)) },
                 { "SpawnTest", () => new GameLevel("SpawnTest.tmx") },
                 { "FinalFloor", () => new GameLevel("FinalFloor.tmx") },
+                { "ObjectiveTest", () => new GameLevel("ObjectiveTest.tmx")}
             });
         }
 

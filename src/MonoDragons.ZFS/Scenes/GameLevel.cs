@@ -51,7 +51,7 @@ namespace MonoDragons.ZFS.Scenes
             CurrentData.PartialLoad(map);
 
             var chars = GetMapCharacters(map);
-            CurrentData.Load(new LevelState(map, chars, new CharacterTurns(chars), _objective));
+            CurrentData.Load(new LevelState(MapFileName.Replace(".tmx", ""), map, chars, new CharacterTurns(chars), _objective));
             Add(new TacticsGame(
                 new TurnBasedCombat(
                     map,
