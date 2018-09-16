@@ -97,6 +97,7 @@
     <Compile Include="GUI\Highlights\MoveAttackTargetsView.cs" />
     <Compile Include="GUI\Highlights\CharacterGroundFootprints.cs" />
     <Compile Include="GUI\Hud\CharacterStatusView.cs" />
+    <Compile Include="GUI\Hud\CurrentGoalView.cs" />
     <Compile Include="GUI\Hud\DialogueView.cs" />
     <Compile Include="GUI\Hud\InGameDialogueLayout.cs" />
     <Compile Include="GUI\Menus\SwitchWeaponsMenu.cs" />
