@@ -14,6 +14,7 @@
         Start,
         Menu,
         Fullscreen,
-        Exit
+        Exit,
+        Character,
     }
 }

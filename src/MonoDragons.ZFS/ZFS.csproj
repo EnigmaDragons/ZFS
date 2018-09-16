@@ -80,6 +80,7 @@
     <Compile Include="CoreGame\Calculators\FriendlyVisionCalculator.cs" />
     <Compile Include="CoreGame\Calculators\FriendlyPerceptionUpdater.cs" />
     <Compile Include="CoreGame\Calculators\NewEnemySpotter.cs" />
+    <Compile Include="CoreGame\Controls\KeyboardControls.cs" />
     <Compile Include="CoreGame\Mechanics\Events\FootstepCounted.cs" />
     <Compile Include="CoreGame\Mechanics\Events\LevelledUp.cs" />
     <Compile Include="CoreGame\Mechanics\Events\PrimaryObjectiveCompleted.cs" />
@@ -103,7 +104,7 @@
     <Compile Include="GUI\Hud\InGameDialogueLayout.cs" />
     <Compile Include="GUI\Menus\SwitchWeaponsMenu.cs" />
     <Compile Include="GUI\UiEffects\FadingVisual.cs" />
-    <Compile Include="GUI\UiEvents\DisplayCharacterStatusRequested.cs" />
+    <Compile Include="GUI\UiEvents\ToggleCharacterStatusViewRequested.cs" />
     <Compile Include="GUI\UiEvents\SubviewDismissed.cs" />
     <Compile Include="GUI\UiEvents\SubviewRequested.cs" />
     <Compile Include="Scenes\GameLevel.cs" />

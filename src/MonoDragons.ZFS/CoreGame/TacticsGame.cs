@@ -9,6 +9,7 @@ using MonoDragons.Core.Physics;
 using MonoDragons.Core.UserInterface;
 using MonoDragons.ZFS.AI;
 using MonoDragons.ZFS.CoreGame.Calculators;
+using MonoDragons.ZFS.CoreGame.Controls;
 using MonoDragons.ZFS.CoreGame.Mechanics.Events;
 using MonoDragons.ZFS.CoreGame.StateEvents;
 using MonoDragons.ZFS.GUI;
@@ -29,6 +30,7 @@ namespace MonoDragons.ZFS.CoreGame
         private readonly Point _startingCameraTile;
         private readonly Camera _camera = new Camera();
         
+        private KeyboardControls _keyboard = new KeyboardControls();
         private MouseState _lastMouseState;
         private MouseAction _mouseAction = MouseAction.None;
         private Point Target;
@@ -43,7 +45,7 @@ namespace MonoDragons.ZFS.CoreGame
 
         public void Init()
         {
-            base.GetOffset = () => new Transform2(-_camera.Position.ToVector2());
+            GetOffset = () => new Transform2(-_camera.Position.ToVector2());
 
             // TODO: Make Mouse Management a separate component
             Event.Subscribe(EventSubscription.Create<MovementOptionsAvailable>(e => _mouseAction = MouseAction.Move, this));

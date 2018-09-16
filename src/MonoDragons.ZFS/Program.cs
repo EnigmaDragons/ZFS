@@ -134,7 +134,8 @@ namespace MonoDragons.ZFS
                 { Keys.Enter, Control.Start },
                 { Keys.Escape, Control.Menu },
                 { Keys.V, Control.A },
-                { Keys.O, Control.X }
+                { Keys.O, Control.X },
+                { Keys.C, Control.Character }
             });
             Input.SetController(ctrl);
             return ctrl;

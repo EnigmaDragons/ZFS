@@ -59,7 +59,7 @@ namespace MonoDragons.ZFS.GUI.Views
             _perception = visuals.Added(StatLabel(position, ++index));
             
             _visuals = visuals;
-            Event.Subscribe<DisplayCharacterStatusRequested>(DisplayCharacter, this);
+            Event.Subscribe<ToggleCharacterStatusViewRequested>(UpdateDisplayedCharacter, this);
         }
 
         private Label StatLabel(Point position, int index)
@@ -73,8 +73,14 @@ namespace MonoDragons.ZFS.GUI.Views
             };
         }
         
-        private void DisplayCharacter(DisplayCharacterStatusRequested e)
+        private void UpdateDisplayedCharacter(ToggleCharacterStatusViewRequested e)
         {
+            if (_shouldShow && _name.Text.Equals(e.Character.Stats.Name))
+            {
+                _shouldShow = false;
+                return;
+            }
+
             Event.Publish(new SubviewRequested());
             var c = e.Character;
             _face.Image = c.FaceImage;

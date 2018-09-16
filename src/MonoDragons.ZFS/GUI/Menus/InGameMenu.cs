@@ -38,7 +38,7 @@ namespace MonoDragons.ZFS.GUI
             };
 
             var mainMenuButton = Buttons.Text(ctx, 4, "Return to Main Menu", () =>  Scene.NavigateTo("MainMenu"), () => true);
-            var characterStatus = Buttons.Text(ctx, 3, "Character Status", () => Event.Publish(new DisplayCharacterStatusRequested(CurrentData.CurrentCharacter)), () => true);
+            var characterStatus = Buttons.Text(ctx, 3, "Character Status", () => Event.Publish(new ToggleCharacterStatusViewRequested(CurrentData.CurrentCharacter)), () => true);
 
             _visuals.Add(new ColoredRectangle
             {
