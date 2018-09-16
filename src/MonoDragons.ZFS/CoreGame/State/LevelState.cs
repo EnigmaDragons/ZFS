@@ -9,6 +9,7 @@ namespace MonoDragons.ZFS.CoreGame
 {
     public sealed class LevelState
     {
+        public PrimaryObjective PrimaryObjective { get; }
         public GameMap Map { get; } 
         public CharacterTurns Turns { get; }
         public IReadOnlyList<Character> Characters { get; }
@@ -23,12 +24,12 @@ namespace MonoDragons.ZFS.CoreGame
         
         public DictionaryWithDefault<Point, bool> FriendlyPerception { get; set; } = new DictionaryWithDefault<Point, bool>(false);
 
-        public LevelState(GameMap map, IReadOnlyList<Character> chars, CharacterTurns turns)
+        public LevelState(GameMap map, IReadOnlyList<Character> chars, CharacterTurns turns, PrimaryObjective primaryObjective)
         {
+            PrimaryObjective = primaryObjective;
             Map = map;
             Characters = chars;
             Turns = turns;
         }
-
     }
 }

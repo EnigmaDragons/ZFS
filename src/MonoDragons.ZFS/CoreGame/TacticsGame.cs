@@ -55,11 +55,8 @@ namespace MonoDragons.ZFS.CoreGame
             Event.Subscribe(EventSubscription.Create<MenuRequested>(e => _shouldIgnoreClicks = true, this));
             Event.Subscribe(EventSubscription.Create<MenuDismissed>(e => _shouldIgnoreClicks = false, this));
 
-            var clickUI = new ClickUI();
-            var visibilityCalculator = new VisibilityCalculator();
-            var perceptionCalculator = new PerceptionCalculator();
-            var perceptionUpdater = new FrinedlyPerceptionUpdater();
-            Add(clickUI);
+            var clickUi = new ClickUI();
+            Add(clickUi);
             Add(new EnemyAI());
             Add(new ActionOptionsCalculator());
             Add(new HideUI());
@@ -67,9 +64,9 @@ namespace MonoDragons.ZFS.CoreGame
             Add(new ShootOptionsCalculator());
             Add(new ProposedShotCalculator());
             Add(new AvailableTargetsUI());
-            Add(visibilityCalculator);
-            Add(perceptionCalculator);
-            Add(perceptionUpdater);
+            Add(new VisibilityCalculator());
+            Add(new PerceptionCalculator());
+            Add(new FriendlyPerceptionUpdater());
             Add(new FriendlyVisionCalculator());
             Add(new NewEnemySpotter());
             Add(new DialogWatcher());
@@ -82,19 +79,19 @@ namespace MonoDragons.ZFS.CoreGame
 #if DEBUG
             Add(new RecentEventDebugLogView { Position = new Vector2(0, 150), MaxLines = 30, HideTextPart = "MonoDragons.ZFS.", FilterStartsWith = "MonoDragons.Core"});
 #endif
-            Add(new HudView(clickUI));
+            Add(new HudView(clickUi));
             CurrentData.Highlights = new Highlights();
             CurrentData.HighHighlights = new HighHighlights();
             Add((IAutomaton)CurrentData.Highlights);
             Add((IAutomaton)CurrentData.HighHighlights);
 
-            CalculateInitVision(visibilityCalculator, perceptionCalculator, perceptionUpdater);
+            CalculateInitVision(new VisibilityCalculator(), new PerceptionCalculator(), new FriendlyPerceptionUpdater());
             _combat.Init();
             _camera.Init(_startingCameraTile);
         }
 
         private static void CalculateInitVision(VisibilityCalculator visibilityCalculator,
-            PerceptionCalculator perceptionCalculator, FrinedlyPerceptionUpdater perceptionUpdater)
+            PerceptionCalculator perceptionCalculator, FriendlyPerceptionUpdater perceptionUpdater)
         {
             CurrentData.Characters.ForEach(x =>
             {

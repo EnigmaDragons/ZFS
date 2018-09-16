@@ -18,6 +18,7 @@ namespace MonoDragons.ZFS.Scenes
 {
     public class GameLevel : SimpleScene
     {
+        private readonly PrimaryObjective _objective;
         private string MapDir { get; }
         private string MapFileName { get; }
         private Point CameraStartingTile { get; }
@@ -27,13 +28,14 @@ namespace MonoDragons.ZFS.Scenes
             : this("Maps2", mapFileName) { }
         
         public GameLevel(string mapFileName, LevelMusic music)
-            : this("Maps2", mapFileName, new Point(10, 10), music) { }
+            : this("Maps2", mapFileName, music, new DefeatAllEnemies()) { }
 
         public GameLevel(string mapDir, string mapFileName)
-            : this(mapDir, mapFileName, new Point(10, 10), new LevelMusic("corp-amb", "corp-action", "corp-boss", 0.5f, 0.36f, 0.36f)) { }
+            : this(mapDir, mapFileName, new LevelMusic("corp-amb", "corp-action", "corp-boss", 0.5f, 0.36f, 0.36f), new DefeatAllEnemies()) { }
 
-        private GameLevel(string mapDir, string mapFileName, Point cameraStartingPosition, LevelMusic music)
+        private GameLevel(string mapDir, string mapFileName, LevelMusic music, PrimaryObjective objective)
         {
+            _objective = objective;
             MapDir = mapDir;
             MapFileName = mapFileName;
             CameraStartingTile = CameraStartingTile;
@@ -49,7 +51,7 @@ namespace MonoDragons.ZFS.Scenes
             CurrentData.PartialLoad(map);
 
             var chars = GetMapCharacters(map);
-            CurrentData.Load(new LevelState(map, chars, new CharacterTurns(chars)));
+            CurrentData.Load(new LevelState(map, chars, new CharacterTurns(chars), _objective));
             Add(new TacticsGame(
                 new TurnBasedCombat(
                     map,

@@ -4,9 +4,9 @@ using MonoDragons.ZFS.CoreGame.StateEvents;
 
 namespace MonoDragons.ZFS.CoreGame.Calculators
 {
-    public class FrinedlyPerceptionUpdater
+    public class FriendlyPerceptionUpdater
     {
-        public FrinedlyPerceptionUpdater()
+        public FriendlyPerceptionUpdater()
         {
             Event.Subscribe<TurnEnded>(_ => UpdatePerception(), this);
         }
