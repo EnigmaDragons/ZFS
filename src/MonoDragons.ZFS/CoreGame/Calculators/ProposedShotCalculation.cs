@@ -24,26 +24,41 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
         {
             var distance = _attacker.CurrentTile.Position.TileDistance(_defender.CurrentTile.Position);
             var attackerWeapon = _attacker.Gear.EquippedWeapon.AsRanged();
-            var proposed = new ShotProposed
+            var proposed = new ShotProposed();
+            var attackerShotPart = new ShotPart
             {
-                Attacker = _attacker,
-                Defender = _defender,
-                AttackerHitChance = new HitChanceCalculation(_attacker.Accuracy, _defenderBlockInfo.BlockChance, _defender.Stats.Agility, _defender.State.IsHiding).Get(),
-                AttackerBulletDamage = (int)Math.Ceiling((attackerWeapon.DamagePerHit * attackerWeapon.EffectiveRanges[distance]) * (100 - (_defender.Stats.Guts * 5)) / 100),
-                AttackerBlockInfo = _attackerBlockInfo,
-                IsAttackerHiding = _attacker.State.IsHiding
+                Character = _attacker,
+                HitChance = new HitChanceCalculation(_attacker.Accuracy, _defenderBlockInfo.BlockChance,
+                    _defender.Stats.Agility, _defender.State.IsHiding).Get(),
+                BulletDamage =
+                    (int)Math.Ceiling((attackerWeapon.DamagePerHit * attackerWeapon.EffectiveRanges[distance])),
+                BlockInfo = _attackerBlockInfo,
+                IsHiding = _attacker.State.IsHiding,
+                NumBullets = attackerWeapon.NumShotsPerAttack,
             };
+
+            var defenderShotPart = new ShotPart
+            {
+                Character = _defender,
+                BlockInfo = _defenderBlockInfo,
+                IsHiding = _defender.State.IsHiding
+
+            };
+
             if (_defender.Gear.EquippedWeapon.IsRanged)
             {
                 var defenderWeapon = _defender.Gear.EquippedWeapon.AsRanged();
-                proposed.DefenderHitChance = new HitChanceCalculation(_defender.Accuracy, _attackerBlockInfo.BlockChance, _attacker.Stats.Agility, _attacker.State.IsHiding).Get();
+                defenderShotPart.HitChance = new HitChanceCalculation(_defender.Accuracy, _attackerBlockInfo.BlockChance, _attacker.Stats.Agility, _attacker.State.IsHiding).Get();
+                defenderShotPart.NumBullets = defenderWeapon.NumShotsPerAttack;
                 if (defenderWeapon.EffectiveRanges.ContainsKey(distance))
-                    proposed.DefenderBulletDamage = (int)Math.Ceiling((defenderWeapon.DamagePerHit * defenderWeapon.EffectiveRanges[distance]) * (100 - (_attacker.Stats.Guts * 5)) / 100);
+                    defenderShotPart.BulletDamage = (int) Math.Ceiling(defenderWeapon.DamagePerHit * defenderWeapon.EffectiveRanges[distance]);
             }
-            proposed.AttackerDamage = proposed.DefenderHitChance * proposed.DefenderBullets * proposed.DefenderBulletDamage / 100;
-            proposed.DefenderDamage = proposed.AttackerHitChance * proposed.AttackerBullets * proposed.AttackerBulletDamage / 100;
-            proposed.DefenderBlockInfo = _defenderBlockInfo;
-            proposed.IsDefenderHiding = _defender.State.IsHiding;
+
+            proposed.ShotContext[AttackRole.Defender] = defenderShotPart;
+            proposed.ShotContext[AttackRole.Attacker] = attackerShotPart;
+            
+            proposed.AttackerDamage = (int)((defenderShotPart.HitChance / 100f) * (defenderShotPart.NumBullets * defenderShotPart.BulletDamage) - _attacker.Stats.Guts);
+            proposed.DefenderDamage = (int)((attackerShotPart.HitChance / 100f) * (attackerShotPart.NumBullets * attackerShotPart.BulletDamage) - _defender.Stats.Guts);
             return proposed;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.Physics;
@@ -15,7 +16,7 @@ namespace MonoDragons.Core.Development
         public Vector2 Position { get; set; }
         public int MaxLines { get; set; } = 40;
         public string HideTextPart { get; set; } = "";
-        public string FilterStartsWith { get; set; } = "";
+        public List<string> FilterStartsWith { get; set; } = new List<string>();
 
         public RecentEventDebugLogView()
         {
@@ -40,7 +41,7 @@ namespace MonoDragons.Core.Development
 
         private void Append(string text)
         {
-            if (!string.IsNullOrWhiteSpace(FilterStartsWith) && text.StartsWith(FilterStartsWith))
+            if (FilterStartsWith.Any(text.StartsWith))
                 return;
                 
             var rendered = text.Replace(HideTextPart, ""); 

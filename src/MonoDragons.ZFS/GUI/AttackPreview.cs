@@ -28,30 +28,32 @@ namespace MonoDragons.ZFS.GUI
                 return;
             
             _hidden = false;
+            var a = e.ShotContext[AttackRole.Attacker];
             _attackerSummary.Update(
-                e.Attacker.FaceImage, 
-                e.Attacker.Stats.Name, 
-                e.Attacker.Gear.EquippedWeapon.Image, 
-                e.Attacker.Gear.EquippedWeapon.Name, 
-                e.AttackerHitChance.ToString(), 
-                e.AttackerBullets.ToString(), 
-                e.AttackerBulletDamage.ToString(), 
-                e.Attacker.Stats.HP, 
-                e.Attacker.State.RemainingHealth, 
+                a.Character.FaceImage, 
+                a.Character.Stats.Name, 
+                a.Character.Gear.EquippedWeapon.Image, 
+                a.Character.Gear.EquippedWeapon.Name, 
+                a.HitChance.ToString(), 
+                a.NumBullets.ToString(), 
+                a.BulletDamage.ToString(), 
+                a.Character.Stats.HP, 
+                a.Character.State.RemainingHealth, 
                 e.AttackerDamage,
-                e.Attacker.Team);
+                a.Character.Team);
+            var d = e.ShotContext[AttackRole.Defender];
             _defenderSummary.Update(
-                e.Defender.FaceImage,
-                e.Defender.Stats.Name,
-                e.Defender.Gear.EquippedWeapon.Image,
-                e.Defender.Gear.EquippedWeapon.Name,
-                e.DefenderHitChance.ToString(),
-                e.DefenderBullets.ToString(),
-                e.DefenderBulletDamage.ToString(),
-                e.Defender.Stats.HP,
-                e.Defender.State.RemainingHealth,
+                d.Character.FaceImage,
+                d.Character.Stats.Name,
+                d.Character.Gear.EquippedWeapon.Image,
+                d.Character.Gear.EquippedWeapon.Name,
+                d.HitChance.ToString(),
+                d.NumBullets.ToString(),
+                d.BulletDamage.ToString(),
+                d.Character.Stats.HP,
+                d.Character.State.RemainingHealth,
                 e.DefenderDamage,
-                e.Attacker.Team);
+                d.Character.Team);
         }
 
         private void Hide()

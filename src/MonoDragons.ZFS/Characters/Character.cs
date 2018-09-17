@@ -118,7 +118,12 @@ namespace MonoDragons.ZFS.Characters
 
         internal void Notify(OverwatchTilesAvailable e) => State.OverwatchedTiles = e.OverwatchedTiles;
         internal void Notify(ShotHit e) => State.RemainingHealth -= e.DamageAmount;
-        internal void Notify(ShotFired e) => Body.FaceToward(e.Target);
+
+        internal void Notify(ShotFired e)
+        {
+            Body.FaceToward(e.Target);
+            State.IsOverwatching = false;
+        }
 
         internal void Notify(object obj) => Logger.WriteLine($"Character {Stats.Name} Received Unknown Notification {obj.GetType()}");
         

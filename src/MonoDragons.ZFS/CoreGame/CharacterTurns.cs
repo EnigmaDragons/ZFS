@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
 using MonoDragons.ZFS.Characters;
@@ -33,6 +34,7 @@ namespace MonoDragons.ZFS.CoreGame
 
         private void BeginNextTurn(TurnEnded e)
         {
+            Logger.WriteLine($"Entered from {Thread.CurrentThread.ManagedThreadId}");
             if (_isGameOver)
                 return;
 

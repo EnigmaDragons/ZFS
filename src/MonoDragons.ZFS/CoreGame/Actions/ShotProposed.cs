@@ -1,24 +1,30 @@
-﻿using MonoDragons.ZFS.Characters;
+﻿using System.Collections.Generic;
+using MonoDragons.ZFS.Characters;
 using MonoDragons.ZFS.CoreGame.Mechanics.Covors;
 
 namespace MonoDragons.ZFS.CoreGame
 {
     public class ShotProposed
     {
-        public Character Attacker { get; set; }
-        public Character Defender { get; set; }
-
-        public int AttackerHitChance { get; set; }
-        public int AttackerBullets => Attacker.Gear.EquippedWeapon.IsRanged ? Attacker.Gear.EquippedWeapon.AsRanged().NumShotsPerAttack : 0;
-        public int AttackerBulletDamage { get; set; }
+        public Dictionary<AttackRole, ShotPart> ShotContext { get; } = new Dictionary<AttackRole, ShotPart>();
         public int AttackerDamage { get; set; }
-        public ShotCoverInfo AttackerBlockInfo { get; set; }
-        public bool IsAttackerHiding { get; set; }
-        public int DefenderHitChance { get; set; }
-        public int DefenderBullets => Defender.Gear.EquippedWeapon.IsRanged ? Defender.Gear.EquippedWeapon.AsRanged().NumShotsPerAttack : 0;
-        public int DefenderBulletDamage { get; set; }
         public int DefenderDamage { get; set; }
-        public ShotCoverInfo DefenderBlockInfo { get; set; }
-        public bool IsDefenderHiding { get; set; }
+    }
+
+    public enum AttackRole
+    {
+        Attacker,
+        Defender
+    }
+    
+    public sealed class ShotPart
+    {
+        public Character Character { get; set; }
+        public AttackRole Role { get; set; }
+        public int HitChance { get; set; }
+        public int NumBullets { get; set; }
+        public int BulletDamage { get; set; }
+        public ShotCoverInfo BlockInfo { get; set; }
+        public bool IsHiding { get; set; }
     }
 }

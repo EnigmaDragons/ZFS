@@ -74,7 +74,14 @@ namespace MonoDragons.ZFS.CoreGame
             Add(_combat);
             Add(_camera);
 #if DEBUG
-            Add(new RecentEventDebugLogView { Position = new Vector2(0, 150), MaxLines = 30, HideTextPart = "MonoDragons.ZFS.", FilterStartsWith = "MonoDragons.Core"});
+            var eventsView = new RecentEventDebugLogView { Position = new Vector2(0, 150), MaxLines = 30, HideTextPart = "MonoDragons.ZFS." };
+            eventsView.FilterStartsWith.Add("MonoDragons.Core");
+            eventsView.FilterStartsWith.Add("MonoDragons.ZFS.CoreGame.StateEvents.TilesSeen");
+            eventsView.FilterStartsWith.Add("MonoDragons.ZFS.CoreGame.StateEvents.TilesPerceived");
+            eventsView.FilterStartsWith.Add("MonoDragons.ZFS.CoreGame.StateEvents.Moved");
+            eventsView.FilterStartsWith.Add("MonoDragons.ZFS.CoreGame.StateEvents.MoveResolved");
+            eventsView.FilterStartsWith.Add("MonoDragons.ZFS.AI.AIActionQueued");
+            Add(eventsView);
 #endif
             Add(new HudView(clickUi));
             CurrentData.Highlights = new Highlights();
