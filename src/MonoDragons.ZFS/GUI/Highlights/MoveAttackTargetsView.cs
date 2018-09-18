@@ -111,7 +111,7 @@ namespace MonoDragons.ZFS.GUI
             return target.Team == Team.Enemy 
                 && CurrentData.CurrentCharacter.Gear.EquippedWeapon.IsRanged
                 && CurrentData.CurrentCharacter.Gear.EquippedWeapon.AsRanged().EffectiveRanges.ContainsKey(_hoveredPoint.TileDistance(target.CurrentTile.Position))
-                && new ShotCalculation(CurrentData.Map[_hoveredPoint], target.CurrentTile).CanShoot();
+                && new ShotCalculation(CurrentData.Map, CurrentData.Map[_hoveredPoint], target.CurrentTile).CanShoot();
         }
     }
 }

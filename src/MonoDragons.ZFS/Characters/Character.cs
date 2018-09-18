@@ -54,12 +54,12 @@ namespace MonoDragons.ZFS.Characters
             _damageNumbers = new DamageNumbersView(this);
         }
         
-        public Character Initialized(GameTile tile)
+        public Character Initialized(GameMap map, GameTile tile)
         {
-            Body.Init(tile);
+            Body.Init(map, tile);
             State.Init();
             _healthBar.Init();
-            State.SeeableTiles = new VisibilityCalculation(this).Calculate();
+            State.SeeableTiles = new VisibilityCalculation(map, this).Calculate();
             IsInitialized = true;
             return this;
         }

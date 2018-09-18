@@ -48,15 +48,8 @@ namespace MonoDragons.ZFS.Scenes
         {
             Music.Play(MusicType.Ambient);
             var map = LoadMap();
-            CurrentData.PartialLoad(map);
-
-            var chars = GetMapCharacters(map);
-            CurrentData.Load(new LevelState(MapFileName.Replace(".tmx", ""), map, chars, new CharacterTurns(chars), _objective));
-            Add(new TacticsGame(
-                new TurnBasedCombat(
-                    map,
-                    chars),
-                CameraStartingTile).Initialized());
+            CurrentData.Load(new LevelState(MapFileName.Replace(".tmx", ""), map, map.Characters, new CharacterTurns(map.Characters), _objective));
+            Add(new TacticsGame(new TurnBasedCombat(map), CameraStartingTile).Initialized());
             Add(new TheSoundGuy());
             Add(new ScreenFade {Duration = TimeSpan.FromSeconds(2)}.Started());
         }
@@ -77,14 +70,6 @@ namespace MonoDragons.ZFS.Scenes
                 () => new GameMapFactory().CreateGameMap(
                     new Tmx(CurrentGame.GraphicsDevice, MapDir, MapFileName), 
                     TileData.RenderSize));
-        }
-
-        private IReadOnlyList<Character> GetMapCharacters(GameMap map)
-        {
-            var characters = map.GetStartingCharacters();
-            if (!characters.Any())
-                throw new InvalidOperationException($"Map '{MapDir}/{MapFileName}' has no characters.");
-            return characters;
         }
 
         public override void Dispose() { }

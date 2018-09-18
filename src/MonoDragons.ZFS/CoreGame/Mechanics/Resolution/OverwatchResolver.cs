@@ -64,7 +64,7 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
                 .Select(x => new ShotConfirmed
                 {
                     Proposed = new ProposedShotCalculation(x, CurrentData.CurrentCharacter,
-                        new ShotCalculation(CurrentData.CurrentCharacter.CurrentTile, x.CurrentTile).GetBestShot(),
+                        new ShotCalculation(CurrentData.Map, CurrentData.CurrentCharacter.CurrentTile, x.CurrentTile).GetBestShot(),
                         x.State.OverwatchedTiles[_moved.Position]).CalculateShot()
                 })
                 .ToList();

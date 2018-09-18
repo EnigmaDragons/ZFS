@@ -23,11 +23,9 @@ namespace MonoDragons.ZFS.CoreGame
         public IReadOnlyList<IReadOnlyList<Point>> AvailableMoves { get; private set; }
         public List<Target> Targets { get; private set; }
 
-        public TurnBasedCombat(GameMap map, IReadOnlyList<Character> characters)
+        public TurnBasedCombat(GameMap map)
         {
             Map = map;
-            if (characters.Any(x => !x.IsInitialized))
-                throw new InvalidOperationException("All Characters must be initialized before Level begins.");
 
             Event.Subscribe(EventSubscription.Create<ActionResolved>(OnActionResolved, this));
             Event.Subscribe(EventSubscription.Create<MovementOptionsAvailable>(x => AvailableMoves = x.AvailableMoves, this));

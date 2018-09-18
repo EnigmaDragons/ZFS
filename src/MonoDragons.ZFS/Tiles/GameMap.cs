@@ -19,6 +19,7 @@ namespace MonoDragons.ZFS.Tiles
         public GameTile this[int x, int y] => Exists(x, y) ? _tileMap[x][y] : GameTile.None;
         public GameTile this[Point point] => Exists(point) ? _tileMap[point.X][point.Y] : GameTile.None;
         public List<GameTile> Tiles { get; }
+        public List<Character> Characters { get; }
 
         public GameMap(List<GameTile> tiles)
         {
@@ -38,6 +39,7 @@ namespace MonoDragons.ZFS.Tiles
                 maxY = Math.Max(t.Position.Y, maxY);
             });
             Tiles = _tileMap.Values.SelectMany(x => x.Values).OrderBy(x => x.Position.X).ThenBy(x => x.Position.Y).ToList();
+            Characters = new CharacterSpawning().GetCharacters(this).ToList();
 
             MinX = minX;
             MaxX = maxX;
@@ -47,11 +49,6 @@ namespace MonoDragons.ZFS.Tiles
 
         public bool Exists(Point point) => Exists(point.X, point.Y);
         public bool Exists(int x, int y) => _tileMap.ContainsKey(x) && _tileMap[x].ContainsKey(y);
-
-        public List<Character> GetStartingCharacters(params Character[] extraCharacters)
-        {
-            return new CharacterSpawning().GetCharacters(this).Concat(extraCharacters).ToList();
-        }
 
         public Point MapPositionToTile(Vector2 position)
         {

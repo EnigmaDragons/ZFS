@@ -38,12 +38,6 @@ namespace MonoDragons.ZFS.CoreGame
         internal static CharacterClass MainCharClass { get; set; } = new Leader();
         internal static Character MainCharacter => Level.FriendliesWhere(x => x.Stats.Name.Equals(MainChar.Name)).Single();
         
-        // TODO: Change Load Process to be holistic.
-        internal static void PartialLoad(GameMap map)
-        {
-            LevelState.Init(new LevelState("Loading", map, new List<Character>(), new CharacterTurns(new Sidechick().AsList()), new DefeatAllEnemies()));
-        }
-        
         internal static void Load(LevelState state)
         {
             LevelState.Init(state);

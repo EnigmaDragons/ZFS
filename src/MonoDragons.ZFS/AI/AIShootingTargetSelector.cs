@@ -18,7 +18,7 @@ namespace MonoDragons.ZFS.AI
         private void SelectTarget(ShootSelected e)
         {
             IfAITurn(() => Shoot(e.AvailableTargets
-                .OrderBy(x => new ShotCalculation(Char.CurrentTile, x.Character.CurrentTile).GetBestShot().BlockChance)
+                .OrderBy(x => new ShotCalculation(CurrentData.Map, Char.CurrentTile, x.Character.CurrentTile).GetBestShot().BlockChance)
                 .ThenByDescending(x => x.Character.Stats.Guts).First()));
         }
 

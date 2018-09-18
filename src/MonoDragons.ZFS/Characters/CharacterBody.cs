@@ -35,13 +35,14 @@ namespace MonoDragons.ZFS.Characters
         private SpriteAnimation _runRight;
 
         private SpriteAnimation _currentAnimation;
+        private GameMap _map;
 
         public Queue<Point> Path { get; set; } = new Queue<Point>();
         public bool ShouldContinue = false;
         public Direction Facing;
 
         public Vector2 CurrentTileLocation { get; private set; }
-        public GameTile CurrentTile => CurrentData.Map[CurrentData.Map.MapPositionToTile(CurrentTileLocation)];
+        public GameTile CurrentTile => _map[_map.MapPositionToTile(CurrentTileLocation)];
         public Transform2 Transform { get; private set; }
 
         public CharacterBody(string characterPath, Vector2 offset, Color glowColor)
@@ -51,9 +52,10 @@ namespace MonoDragons.ZFS.Characters
             _offset = offset;
         }
 
-        public void Init(GameTile currentTile)
+        public void Init(GameMap map, GameTile currentTile)
         {
             CurrentTileLocation = currentTile.Transform.Location;
+            _map = map;
             const float idleDuration = 0.5f;
             const float runDuration = 0.1f;
             const float scale = 1f;
@@ -106,7 +108,7 @@ namespace MonoDragons.ZFS.Characters
                 new SpriteAnimationFrame(Resources.Load<Texture2D>($"Characters/{_characterPath}/{_characterPath}-run-right-7.png"), scale, runDuration),
                 new SpriteAnimationFrame(Resources.Load<Texture2D>($"Characters/{_characterPath}/{_characterPath}-run-right-8.png"), scale, runDuration));
             var sprite = Resources.Load<Texture2D>($"Characters/{_characterPath}/{_characterPath}-idle-down-1.png");
-            Transform = new Transform2(new Vector2((float)(CurrentTile.Transform.Size.Width - sprite.Width) / 2, sprite.Height - sprite.Height), new Size2(sprite.Width, sprite.Height));
+            Transform = new Transform2(new Vector2((float)(currentTile.Transform.Size.Width - sprite.Width) / 2, sprite.Height - sprite.Height), new Size2(sprite.Width, sprite.Height));
             _currentAnimation = _idleDown;
         }
 

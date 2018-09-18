@@ -25,6 +25,9 @@ namespace MonoDragons.ZFS.CoreGame
         
         public DictionaryWithDefault<Point, bool> FriendlyPerception { get; set; } = new DictionaryWithDefault<Point, bool>(false);
 
+        public LevelState(string name, GameMap map, PrimaryObjective primaryObjective) 
+            : this(name, map, map.Characters, new CharacterTurns(map.Characters), primaryObjective) {}
+            
         public LevelState(string name, GameMap map, IReadOnlyList<Character> chars, CharacterTurns turns, PrimaryObjective primaryObjective)
         {
             Name = name;

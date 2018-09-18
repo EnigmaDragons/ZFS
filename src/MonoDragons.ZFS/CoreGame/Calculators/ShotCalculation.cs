@@ -9,13 +9,15 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
 {
     public class ShotCalculation
     {
-        private const float EPSILON = 0.01f;
-        
+        private const float Epsilon = 0.01f;
+
+        private readonly GameMap _map;
         private readonly GameTile _aggressor;
         private readonly GameTile _victim;
 
-        public ShotCalculation(GameTile aggressor, GameTile victim)
+        public ShotCalculation(GameMap map, GameTile aggressor, GameTile victim)
         {
+            _map = map;
             _aggressor = aggressor;
             _victim = victim;
         }
@@ -80,7 +82,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
                 if (_aggressor.Position.X == _victim.Position.X)
                     for (var y = _aggressor.Position.Y; y != _victim.Position.Y; y += direction)
                     {
-                        cover = new CoverProvided(CurrentData.Map[_aggressor.Position.X, y]);
+                        cover = new CoverProvided(_map[_aggressor.Position.X, y]);
                         if (cover.Cover == Cover.Heavy)
                             return cover;
                         if ((int)cover.Cover > (int)currentCover.Cover)
@@ -109,7 +111,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
                 if (_aggressor.Position.Y == _victim.Position.Y)
                     for (var x = _aggressor.Position.X; x != _victim.Position.X; x += direction)
                     {
-                        cover = new CoverProvided(CurrentData.Map[x, _aggressor.Position.Y]);
+                        cover = new CoverProvided(_map[x, _aggressor.Position.Y]);
                         if (cover.Cover == Cover.Heavy)
                             return cover;
                         if ((int)cover.Cover > (int)currentCover.Cover)
@@ -144,7 +146,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
             currentY += 1 * Math.Sign(distanceY);
             while (Math.Abs(currentX - victimCenterX) > 1 || Math.Abs(currentY - victimCenterY) > 1)
             {
-                cover = new CoverProvided(CurrentData.Map[currentX / 2, currentY / 2]);
+                cover = new CoverProvided(_map[currentX / 2, currentY / 2]);
                 if (cover.Cover == Cover.Heavy)
                     return cover;
                 if ((int)cover.Cover > (int)currentCover.Cover)
@@ -159,7 +161,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
                         : Math.Floor((currentPreciseY - 0.01) / TileData.RenderHeight))
                     * TileData.RenderHeight - currentPreciseY) / distanceY);
 
-                if(Math.Abs(timeUntilCrossX - timeUntilCrossY) < EPSILON)
+                if(Math.Abs(timeUntilCrossX - timeUntilCrossY) < Epsilon)
                 {
                     currentX += 1 * horizontalDirection;
                     currentY += 1 * verticalDirection;
@@ -198,13 +200,13 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
 
         private bool IsInBounds(int x, int y)
         {
-            return CurrentData.Map.MinX * 2 <= x && x <= CurrentData.Map.MaxX * 2 || CurrentData.Map.MinY * 2 <= y && y <= CurrentData.Map.MaxY * 2;
+            return _map.MinX * 2 <= x && x <= _map.MaxX * 2 || _map.MinY * 2 <= y && y <= _map.MaxY * 2;
         }
 
         private CoverProvided CalculateCover(int x, int y)
         {
             if(x % 2 == 0 && y % 2 == 0)
-                return new CoverProvided(CurrentData.Map[x / 2, y / 2]);
+                return new CoverProvided(_map[x / 2, y / 2]);
             if ((x % 2 == 0) != (y % 2 == 0))
                 return CalculateOrthogonalCover(x, y);
             return CalculateDiagonalCover(x, y);
@@ -213,29 +215,29 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
         private CoverProvided CalculateOrthogonalCover(int x, int y)
         {
             if(x % 2 != 0)
-                return new CoverProvided(CurrentData.Map[(x - 1) / 2, y / 2], CurrentData.Map[(x + 1) / 2, y / 2]);
-            return new CoverProvided(CurrentData.Map[x / 2, (y - 1) / 2], CurrentData.Map[x / 2, (y + 1) / 2]);
+                return new CoverProvided(_map[(x - 1) / 2, y / 2], _map[(x + 1) / 2, y / 2]);
+            return new CoverProvided(_map[x / 2, (y - 1) / 2], _map[x / 2, (y + 1) / 2]);
         }
 
         private CoverProvided CalculateDiagonalCover(int x, int y)
         {
-            var cover1 = new CoverProvided(CurrentData.Map[(x - 1) / 2, (y - 1) / 2], CurrentData.Map[(x + 1) / 2, (y + 1) / 2]);
-            var cover2 = new CoverProvided(CurrentData.Map[(x - 1) / 2, (y + 1) / 2], CurrentData.Map[(x + 1) / 2, (y - 1) / 2]);
+            var cover1 = new CoverProvided(_map[(x - 1) / 2, (y - 1) / 2], _map[(x + 1) / 2, (y + 1) / 2]);
+            var cover2 = new CoverProvided(_map[(x - 1) / 2, (y + 1) / 2], _map[(x + 1) / 2, (y - 1) / 2]);
             return cover1.Cover > cover2.Cover ? cover1 : cover2;
         }
 
         private CoverProvided CalculateDiagonalCoverIgnoring(int x, int y, GameTile tile)
         {
-            return tile == CurrentData.Map[(x - 1) / 2, (y - 1) / 2] || tile == CurrentData.Map[(x + 1) / 2, (y + 1) / 2]
-                ? new CoverProvided(CurrentData.Map[(x - 1) / 2, (y + 1) / 2], CurrentData.Map[(x + 1) / 2, (y - 1) / 2])
-                : new CoverProvided(CurrentData.Map[(x - 1) / 2, (y - 1) / 2], CurrentData.Map[(x + 1) / 2, (y + 1) / 2]);
+            return tile == _map[(x - 1) / 2, (y - 1) / 2] || tile == _map[(x + 1) / 2, (y + 1) / 2]
+                ? new CoverProvided(_map[(x - 1) / 2, (y + 1) / 2], _map[(x + 1) / 2, (y - 1) / 2])
+                : new CoverProvided(_map[(x - 1) / 2, (y - 1) / 2], _map[(x + 1) / 2, (y + 1) / 2]);
         }
 
         private CoverProvided CalculateDiagonalCoverTraveling(int x, int y, bool isPorportional)
         {
             return isPorportional
-                ? new CoverProvided(CurrentData.Map[(x - 1) / 2, (y - 1) / 2], CurrentData.Map[(x + 1) / 2, (y + 1) / 2])
-                : new CoverProvided(CurrentData.Map[(x - 1) / 2, (y + 1) / 2], CurrentData.Map[(x + 1) / 2, (y - 1) / 2]);
+                ? new CoverProvided(_map[(x - 1) / 2, (y - 1) / 2], _map[(x + 1) / 2, (y + 1) / 2])
+                : new CoverProvided(_map[(x - 1) / 2, (y + 1) / 2], _map[(x + 1) / 2, (y - 1) / 2]);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace MonoDragons.ZFS.Tiles
                     tsxMap[tsx.FirstId + i] = tsx;
                 }
             });
-
+            
             return new GameMap(tmx.Layers
                 .SelectMany(layer => layer.Tiles.Select(tile => new {Layer = layer, Tile = tile}))
                 .Where(x => x.Tile.TextureId != 0)

@@ -13,7 +13,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
 
         public void UpdateSight(Character character)
         {
-            Event.Queue(new TilesSeen { Character = character, SeeableTiles = new VisibilityCalculation(character).Calculate() });
+            Event.Queue(new TilesSeen { Character = character, SeeableTiles = new VisibilityCalculation(CurrentData.Map, character).Calculate() });
         }
     }
 }

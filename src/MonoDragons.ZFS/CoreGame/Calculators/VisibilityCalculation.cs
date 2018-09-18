@@ -8,11 +8,13 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
 {
     public class VisibilityCalculation
     {
+        private readonly GameMap _map;
         private readonly Character _character;
         const int calculation = 18;
 
-        public VisibilityCalculation(Character character)
+        public VisibilityCalculation(GameMap map, Character character)
         {
+            _map = map;
             _character = character;
         }
 
@@ -20,11 +22,11 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
         {
             DictionaryWithDefault<Point, bool> canSee = new DictionaryWithDefault<Point, bool>(false);
             var possibleTiles = new PointRadiusCalculation(_character.CurrentTile.Position, calculation).Calculate()
-                .Where(x => CurrentData.Map.Exists(x)).ToList();
+                .Where(x => _map.Exists(x)).ToList();
             possibleTiles
-                .Where(x => new ShotCalculation(_character.CurrentTile, CurrentData.Map[x]).CanShoot())
+                .Where(x => new ShotCalculation(_map, _character.CurrentTile, _map[x]).CanShoot())
                 .ForEach(x => canSee[x] = true);
-            canSee.Where(x => CurrentData.Map[x.Key].Cover == Cover.Heavy)
+            canSee.Where(x => _map[x.Key].Cover == Cover.Heavy)
                 .ForEach(x =>
                 {
                     RecursiveAddHeavyUp(canSee, x.Key, possibleTiles);
@@ -36,7 +38,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
         private void RecursiveAddHeavyUp(DictionaryWithDefault<Point, bool> canSee, Point seenHeavyTile, List<Point> possiblePoints)
         {
             var potentialPoint = new Point(seenHeavyTile.X, seenHeavyTile.Y - 1);
-            if (CurrentData.Map.Exists(potentialPoint) && CurrentData.Map[potentialPoint].Cover == Cover.Heavy && possiblePoints.Contains(potentialPoint))
+            if (_map.Exists(potentialPoint) && _map[potentialPoint].Cover == Cover.Heavy && possiblePoints.Contains(potentialPoint))
             {
                 canSee[potentialPoint] = true;
                 RecursiveAddHeavyUp(canSee, potentialPoint, possiblePoints);
@@ -46,7 +48,7 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
         private void RecursiveAddHeavyDown(DictionaryWithDefault<Point, bool> canSee, Point seenHeavyTile, List<Point> possiblePoints)
         {
             var potentialPoint = new Point(seenHeavyTile.X, seenHeavyTile.Y + 1);
-            if (CurrentData.Map.Exists(potentialPoint) && CurrentData.Map[potentialPoint].Cover == Cover.Heavy && possiblePoints.Contains(potentialPoint))
+            if (_map.Exists(potentialPoint) && _map[potentialPoint].Cover == Cover.Heavy && possiblePoints.Contains(potentialPoint))
             {
                 canSee[potentialPoint] = true;
                 RecursiveAddHeavyUp(canSee, potentialPoint, possiblePoints);

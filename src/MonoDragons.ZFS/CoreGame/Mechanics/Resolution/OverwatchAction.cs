@@ -24,7 +24,7 @@ namespace MonoDragons.ZFS.CoreGame.Mechanics.Resolution
                 var tiles = ValidTiles(new PointRadiusCalculation(CurrentData.CurrentCharacter.CurrentTile.Position, CurrentData.CurrentCharacter.Gear.EquippedWeapon.AsRanged().Range).Calculate());
                 tiles.ForEach(x =>
                 {
-                    var shot = new ShotCalculation(CurrentData.CurrentCharacter.CurrentTile, CurrentData.Map[x]).GetBestShot();
+                    var shot = new ShotCalculation(CurrentData.Map, CurrentData.CurrentCharacter.CurrentTile, CurrentData.Map[x]).GetBestShot();
                     if (new HitChanceCalculation(CurrentData.CurrentCharacter.Accuracy, shot.BlockChance).Get() > 0)
                         overwatchedTiles[x] = shot;
                 });

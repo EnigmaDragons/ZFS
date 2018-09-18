@@ -24,9 +24,9 @@ namespace MonoDragons.ZFS.CoreGame.Calculators
                     .Select(x => new Target
                     {
                         Character = x,
-                        CoverToThem = new ShotCalculation(CurrentData.CurrentCharacter.CurrentTile, x.CurrentTile).GetBestShot(),
+                        CoverToThem = new ShotCalculation(CurrentData.Map, CurrentData.CurrentCharacter.CurrentTile, x.CurrentTile).GetBestShot(),
                         CoverFromThem = CanShoot(x, CurrentData.CurrentCharacter)
-                            ? new ShotCalculation(x.CurrentTile, CurrentData.CurrentCharacter.CurrentTile).GetBestShot()
+                            ? new ShotCalculation(CurrentData.Map, x.CurrentTile, CurrentData.CurrentCharacter.CurrentTile).GetBestShot()
                             : new ShotCoverInfo(new List<CoverProvided>())
                     }).ToList()
             };
