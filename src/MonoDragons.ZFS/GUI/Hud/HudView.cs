@@ -21,7 +21,7 @@ namespace MonoDragons.ZFS.GUI
             Add(new ActionOptionsMenu(clickUi));
             Add(new GameOverMenu(clickUi));
             Add(new SwitchWeaponsMenu(clickUi));
-            Add(new CharacterStatusView(new Point(0.33.VW(), 0.17.VH())));
+            Add(new CharacterStatusView(clickUi, new Point(0.33.VW(), 0.17.VH())));
             var dialogs = new InGameDialogueLayout();
             clickUi.Add(dialogs.Branch);
             Add(dialogs);

@@ -9,11 +9,13 @@ using MonoDragons.ZFS.Themes;
 namespace MonoDragons.ZFS.GUI.Views
 {
     public sealed class CharacterStatusView : IVisual
-    {        
+    {
         private static readonly int _viewWidth = 0.34.VW();
         private static readonly int _viewHeight = 0.66.VH();
         
+        private readonly ClickUIBranch _branch = new ClickUIBranch(nameof(CharacterStatusView), 8);
         private readonly IReadOnlyList<IVisual> _visuals;
+        private readonly ClickUI _clickUi;
 
         private readonly UiImage _face;
         private readonly Label _level;
@@ -27,8 +29,9 @@ namespace MonoDragons.ZFS.GUI.Views
 
         private bool _shouldShow;
 
-        public CharacterStatusView(Point position)
+        public CharacterStatusView(ClickUI clickUi, Point position)
         {
+            _clickUi = clickUi;
             var visuals = new List<IVisual>();            
             visuals.Add(new UiImage
             {
@@ -36,17 +39,17 @@ namespace MonoDragons.ZFS.GUI.Views
                 Transform = new Transform2(new Rectangle(position.X, position.Y, _viewWidth, _viewHeight))
             });
 
-            _face = visuals.Added(new UiImage { Transform = new Transform2(new Rectangle(position.X + 50, position.Y + 60, 200, 200)) });
+            _face = visuals.Added(new UiImage { Transform = new Transform2(new Rectangle(position.X + 50, position.Y + 50, 160, 160)) });
             _name = visuals.Added(new Label
             {
                 Font = GuiFonts.Large,
-                Transform = new Transform2(new Rectangle(position.X + 20, position.Y + 0.02.VH(), _viewWidth, 50)),
+                Transform = new Transform2(new Rectangle(position.X + 20, position.Y + 0.020.VH(), _viewWidth, 50)),
                 TextColor = UiColors.InGame_Text
             });
             _level = visuals.Added(new Label
             {
                 Font = GuiFonts.Large,
-                Transform = new Transform2(new Rectangle(position.X + 10, position.Y + 0.02.VH() + 240, _viewWidth / 2, 50)),
+                Transform = new Transform2(new Rectangle(position.X + 10, position.Y + 0.020.VH() + 200, _viewWidth / 2, 50)),
                 TextColor = UiColors.InGame_Text
             });
             
@@ -58,6 +61,11 @@ namespace MonoDragons.ZFS.GUI.Views
             _agility = visuals.Added(StatLabel(position, ++index));
             _perception = visuals.Added(StatLabel(position, ++index));
             
+            var dismissButton = Buttons.Text(new Buttons.MenuContext { Width = _viewWidth, FirstButtonYOffset = 520, X = position.X, Y = position.Y }, 
+                0, "Dismiss", () => _shouldShow = false, () => true);
+            _branch.Add(dismissButton);
+            visuals.Add(dismissButton);
+            
             _visuals = visuals;
             Event.Subscribe<ToggleCharacterStatusViewRequested>(UpdateDisplayedCharacter, this);
         }
@@ -68,7 +76,7 @@ namespace MonoDragons.ZFS.GUI.Views
             {
                 Font = GuiFonts.Medium,
                 Transform = new Transform2(new Rectangle(position.X + 10,
-                    position.Y + 0.02.VH() + 300 + (index) * 40, _viewWidth / 2, 30)),
+                    position.Y + 0.02.VH() + 260 + (index) * 40, _viewWidth / 2, 30)),
                 TextColor = UiColors.InGame_Text
             };
         }
@@ -77,7 +85,7 @@ namespace MonoDragons.ZFS.GUI.Views
         {
             if (_shouldShow && _name.Text.Equals(e.Character.Stats.Name))
             {
-                _shouldShow = false;
+                Hide();
                 return;
             }
 
@@ -92,7 +100,14 @@ namespace MonoDragons.ZFS.GUI.Views
             _guts.Text = $"GUT: {c.Stats.Guts}";
             _agility.Text = $"AGI: {c.Stats.Agility}";
             _perception.Text = $"PER: {c.Stats.Perception}";
+            _clickUi.Add(_branch);
             _shouldShow = true;
+        }
+
+        private void Hide()
+        {
+            _shouldShow = false;
+            _clickUi.Remove(_branch); 
         }
         
         public void Draw(Transform2 parentTransform)
