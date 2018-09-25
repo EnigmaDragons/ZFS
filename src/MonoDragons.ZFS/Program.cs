@@ -87,7 +87,7 @@ namespace MonoDragons.ZFS
 #if DEBUG
             return new DebugToolsLayout();
 #else
-            return new Dummy();
+            return new Nothing();
 #endif
         }
 

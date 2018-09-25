@@ -101,6 +101,7 @@
     <Compile Include="GUI\Hud\CharacterStatusView.cs" />
     <Compile Include="GUI\Hud\CurrentGoalView.cs" />
     <Compile Include="GUI\Hud\DialogueView.cs" />
+    <Compile Include="GUI\Hud\GameWorldClickable.cs" />
     <Compile Include="GUI\Hud\InGameDialogueLayout.cs" />
     <Compile Include="GUI\Menus\SwitchWeaponsMenu.cs" />
     <Compile Include="GUI\UiEffects\FadingVisual.cs" />

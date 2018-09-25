@@ -13,6 +13,7 @@ using MonoDragons.ZFS.CoreGame.Controls;
 using MonoDragons.ZFS.CoreGame.Mechanics.Events;
 using MonoDragons.ZFS.CoreGame.StateEvents;
 using MonoDragons.ZFS.GUI;
+using MonoDragons.ZFS.GUI.Hud;
 using Camera = MonoDragons.ZFS.GUI.Camera;
 
 namespace MonoDragons.ZFS.CoreGame
@@ -55,6 +56,7 @@ namespace MonoDragons.ZFS.CoreGame
             Event.Subscribe(EventSubscription.Create<MenuDismissed>(e => _shouldIgnoreClicks = false, this));
 
             var clickUi = new ClickUI();
+            clickUi.Add(new GameWorldClickable(OnGameWorldClick));
             Add(clickUi);
             Add(new EnemyAI());
             Add(new ActionOptionsCalculator());
@@ -117,8 +119,8 @@ namespace MonoDragons.ZFS.CoreGame
 
                 if (_combat.Map.Exists(tilePoint.X, tilePoint.Y) && mouse.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released)
                     Target = tilePoint;
-                else if (_combat.Map.Exists(Target.X, Target.Y) && Target == tilePoint && mouse.LeftButton == ButtonState.Released && _lastMouseState.LeftButton == ButtonState.Pressed)
-                    InvokeClickAction(tilePoint.X, tilePoint.Y);
+//                else if (_combat.Map.Exists(Target.X, Target.Y) && Target == tilePoint && mouse.LeftButton == ButtonState.Released && _lastMouseState.LeftButton == ButtonState.Pressed)
+//                    InvokeClickAction(tilePoint.X, tilePoint.Y);
                 else if (mouse.LeftButton == ButtonState.Released && _lastMouseState.LeftButton == ButtonState.Pressed)
                     Target = new Point(-1, -1);
 
@@ -127,6 +129,14 @@ namespace MonoDragons.ZFS.CoreGame
             base.Update(delta);
         }
 
+        private void OnGameWorldClick()
+        {
+            var mouse = ScaledMouse.GetState();
+            var positionOnMap = mouse.Position + _camera.Position;
+            var tilePoint = CurrentData.Map.MapPositionToTile(positionOnMap.ToVector2());
+            InvokeClickAction(tilePoint.X, tilePoint.Y);
+        }
+        
         private void InvokeClickAction(int x, int y)
         {
             if (_shouldIgnoreClicks)

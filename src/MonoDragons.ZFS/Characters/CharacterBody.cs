@@ -18,8 +18,8 @@ namespace MonoDragons.ZFS.Characters
     public sealed class CharacterBody : IAutomaton, IVisual
     {
         private const double UnseenEnemySpeed = 9;
-        private const double RunSpeed = 0.3;
-        private const double EnemySpeed = 0.2;
+        private const double RunSpeed = 0.2;
+        private const double EnemySpeed = 0.16;
         private readonly Vector2 _offset;
         private readonly string _characterPath;
         private readonly GlowEffect _glow;

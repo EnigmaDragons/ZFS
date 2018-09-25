@@ -14,17 +14,17 @@ namespace MonoDragons.Core.UserInterface
     {
         public static readonly ClickableUIElement None = new NoElement();
 
-        private List<ClickUIBranch> _branches = new List<ClickUIBranch> { new ClickUIBranch("Base", 0) };
+        private readonly ClickUIBranch _elementLayer = new ClickUIBranch("Base", 0);
+        private readonly Action<ClickUIBranch>[] subscribeAction;
         
+        private List<ClickUIBranch> _branches;
         private ClickableUIElement _current = None;
         private bool _wasClicked;
-        private ClickUIBranch _elementLayer;
-        private readonly Action<ClickUIBranch>[] subscribeAction;
 
         public ClickUI()
         {
-            _elementLayer = _branches[0];
-            subscribeAction = new Action<ClickUIBranch>[] { Add, Remove }; ;
+            _branches = new List<ClickUIBranch> {_elementLayer};
+            subscribeAction = new Action<ClickUIBranch>[] { Add, Remove };
         }
 
         public void Add(ClickUIBranch branch)

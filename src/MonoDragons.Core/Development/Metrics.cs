@@ -21,7 +21,7 @@ namespace MonoDragons.Core.Development
 
         public Metrics()
         {
-            _timer = new TimerTask(AccumulateMetrics, 500);
+            _timer = new TimerTask(AccumulateMetrics, 1000);
         }
 
         public void Update(TimeSpan delta)
