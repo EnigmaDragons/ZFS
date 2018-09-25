@@ -1,4 +1,5 @@
-﻿using MonoDragons.Core.Engine;
+﻿using Microsoft.Xna.Framework;
+using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
 using MonoDragons.Core.Physics;
 using MonoDragons.Core.UserInterface;
@@ -11,7 +12,7 @@ namespace MonoDragons.ZFS.GUI
 {
     public class HideUI : IVisual
     {
-        private readonly UiImage _hideBonusImage = new UiImage { Image = "UI/shield-placeholder-1" };
+        private readonly UiImage _hideBonusImage = new UiImage { Tint = Color.White.WithAlpha(100), Image = "UI/cover-2" };
         private readonly Label _hideBonusLabel = new Label { Text = "+100%", TextColor = UiColors.InGame_Text };
         private bool _hidden = true;
 

@@ -31,11 +31,10 @@ namespace MonoDragons.ZFS.CoreGame
         private readonly Point _startingCameraTile;
         private readonly Camera _camera = new Camera();
         
-        private KeyboardControls _keyboard = new KeyboardControls();
         private MouseState _lastMouseState;
         private MouseAction _mouseAction = MouseAction.None;
         private Point Target;
-        private GameDrawMaster _drawMaster = new GameDrawMaster();
+        private readonly GameDrawMaster _drawMaster = new GameDrawMaster();
         private bool _shouldIgnoreClicks;
 
         public TacticsGame(TurnBasedCombat combatEngine, Point startingCameraTile)
@@ -57,6 +56,7 @@ namespace MonoDragons.ZFS.CoreGame
 
             var clickUi = new ClickUI();
             clickUi.Add(new GameWorldClickable(OnGameWorldClick));
+            Add(new KeyboardControls());
             Add(clickUi);
             Add(new EnemyAI());
             Add(new ActionOptionsCalculator());
@@ -119,8 +119,6 @@ namespace MonoDragons.ZFS.CoreGame
 
                 if (_combat.Map.Exists(tilePoint.X, tilePoint.Y) && mouse.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released)
                     Target = tilePoint;
-//                else if (_combat.Map.Exists(Target.X, Target.Y) && Target == tilePoint && mouse.LeftButton == ButtonState.Released && _lastMouseState.LeftButton == ButtonState.Pressed)
-//                    InvokeClickAction(tilePoint.X, tilePoint.Y);
                 else if (mouse.LeftButton == ButtonState.Released && _lastMouseState.LeftButton == ButtonState.Pressed)
                     Target = new Point(-1, -1);
 
@@ -134,13 +132,8 @@ namespace MonoDragons.ZFS.CoreGame
             var mouse = ScaledMouse.GetState();
             var positionOnMap = mouse.Position + _camera.Position;
             var tilePoint = CurrentData.Map.MapPositionToTile(positionOnMap.ToVector2());
-            InvokeClickAction(tilePoint.X, tilePoint.Y);
-        }
-        
-        private void InvokeClickAction(int x, int y)
-        {
-            if (_shouldIgnoreClicks)
-                return;
+            var x = tilePoint.X;
+            var y = tilePoint.Y;
             if (_mouseAction.Equals(MouseAction.Move))
                 _combat.MoveTo(x, y);
             if (_mouseAction.Equals(MouseAction.Shoot))
