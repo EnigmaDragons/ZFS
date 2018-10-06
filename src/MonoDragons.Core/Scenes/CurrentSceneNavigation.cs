@@ -27,7 +27,7 @@ namespace MonoDragons.Core.Scenes
         {
             InitLoadingSceneIfNeeded();
 
-            var previousScene = _currentScene;
+            var previousScene = _currentScene.Value;
             _currentScene.Set(LoadingScene);
             _beforeNavigate.ForEach(x => x());
             previousScene.Dispose();

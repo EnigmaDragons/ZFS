@@ -1,41 +1,23 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 using MonoDragons.Core.Development;
 using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
-using MonoDragons.Core.Inputs;
 using MonoDragons.Core.Physics;
 using MonoDragons.Core.UserInterface;
 using MonoDragons.ZFS.AI;
 using MonoDragons.ZFS.CoreGame.Calculators;
 using MonoDragons.ZFS.CoreGame.Controls;
-using MonoDragons.ZFS.CoreGame.Mechanics.Events;
-using MonoDragons.ZFS.CoreGame.StateEvents;
 using MonoDragons.ZFS.GUI;
-using MonoDragons.ZFS.GUI.Hud;
 using Camera = MonoDragons.ZFS.GUI.Camera;
 
 namespace MonoDragons.ZFS.CoreGame
 {
-    public class TacticsGame : GameObjContainer, IInitializable
+    public sealed class TacticsGame : GameObjContainer, IInitializable
     {
-        private enum MouseAction
-        {
-            None,
-            Move,
-            Shoot,
-        }
-
         private readonly TurnBasedCombat _combat;
         private readonly Point _startingCameraTile;
         private readonly Camera _camera = new Camera();
-        
-        private MouseState _lastMouseState;
-        private MouseAction _mouseAction = MouseAction.None;
-        private Point Target;
         private readonly GameDrawMaster _drawMaster = new GameDrawMaster();
-        private bool _shouldIgnoreClicks;
 
         public TacticsGame(TurnBasedCombat combatEngine, Point startingCameraTile)
         {
@@ -47,15 +29,8 @@ namespace MonoDragons.ZFS.CoreGame
         {
             GetOffset = () => new Transform2(-_camera.Position.ToVector2());
 
-            // TODO: Make Mouse Management a separate component
-            Event.Subscribe(EventSubscription.Create<MovementOptionsAvailable>(e => _mouseAction = MouseAction.Move, this));
-            Event.Subscribe(EventSubscription.Create<MovementConfirmed>(e => _mouseAction = MouseAction.None, this));
-            Event.Subscribe(EventSubscription.Create<ShootSelected>(e => _mouseAction = MouseAction.Shoot, this));
-            Event.Subscribe(EventSubscription.Create<MenuRequested>(e => _shouldIgnoreClicks = true, this));
-            Event.Subscribe(EventSubscription.Create<MenuDismissed>(e => _shouldIgnoreClicks = false, this));
-
             var clickUi = new ClickUI();
-            clickUi.Add(new GameWorldClickable(OnGameWorldClick));
+            Add(new MouseControls(clickUi, _camera, _combat));
             Add(new KeyboardControls());
             Add(clickUi);
             Add(new EnemyAI());
@@ -65,9 +40,6 @@ namespace MonoDragons.ZFS.CoreGame
             Add(new ShootOptionsCalculator());
             Add(new ProposedShotCalculator());
             Add(new AvailableTargetsUI());
-            Add(new VisibilityCalculator());
-            Add(new PerceptionCalculator());
-            Add(new FriendlyPerceptionUpdater());
             Add(new FriendlyVisionCalculator());
             Add(new NewEnemySpotter());
             Add(new DialogWatcher());
@@ -92,52 +64,12 @@ namespace MonoDragons.ZFS.CoreGame
             Add((IAutomaton)CurrentData.HighHighlights);
             Add(CurrentData.PrimaryObjective);
 
-            CalculateInitVision(new VisibilityCalculator(), new PerceptionCalculator(), new FriendlyPerceptionUpdater());
+            Add(new LevelInitialVisibilityCalculator(
+                new VisibilityCalculator(),
+                new PerceptionCalculator(), 
+                new FriendlyPerceptionUpdater()).Initialized());
             _combat.Init();
             _camera.Init(_startingCameraTile);
-        }
-
-        private static void CalculateInitVision(VisibilityCalculator visibilityCalculator,
-            PerceptionCalculator perceptionCalculator, FriendlyPerceptionUpdater perceptionUpdater)
-        {
-            CurrentData.Characters.ForEach(x =>
-            {
-                visibilityCalculator.UpdateSight(x);
-                perceptionCalculator.UpdatePerception(x);
-            });
-            perceptionUpdater.UpdatePerception();
-        }
-
-        public override void Update(TimeSpan delta)
-        {
-            var mouse = ScaledMouse.GetState();
-            if (CurrentGame.TheGame.IsActive)
-            {
-                var positionOnMap = mouse.Position + _camera.Position;
-                var tilePoint = CurrentData.Map.MapPositionToTile(positionOnMap.ToVector2());
-                CurrentData.HoveredTile = tilePoint;
-
-                if (_combat.Map.Exists(tilePoint.X, tilePoint.Y) && mouse.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released)
-                    Target = tilePoint;
-                else if (mouse.LeftButton == ButtonState.Released && _lastMouseState.LeftButton == ButtonState.Pressed)
-                    Target = new Point(-1, -1);
-
-                _lastMouseState = mouse;
-            }
-            base.Update(delta);
-        }
-
-        private void OnGameWorldClick()
-        {
-            var mouse = ScaledMouse.GetState();
-            var positionOnMap = mouse.Position + _camera.Position;
-            var tilePoint = CurrentData.Map.MapPositionToTile(positionOnMap.ToVector2());
-            var x = tilePoint.X;
-            var y = tilePoint.Y;
-            if (_mouseAction.Equals(MouseAction.Move))
-                _combat.MoveTo(x, y);
-            if (_mouseAction.Equals(MouseAction.Shoot))
-                _combat.Shoot(x, y);
         }
     }
 }

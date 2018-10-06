@@ -15,10 +15,6 @@ namespace MonoDragons.Core.Engine
 
         protected virtual Func<Transform2> GetOffset { get; set; }
 
-        protected void Add(IVisual visual) =>  OnlyDuringInit(() => _visuals.Add(visual));
-        protected void Add(IAutomaton automaton) => OnlyDuringInit(() => _automata.Add(automaton));
-        protected void Add(object actor) => OnlyDuringInit(() => _actors.Add(actor));
-        
         public GameObjContainer()
             : this(false) { }
 
@@ -28,6 +24,9 @@ namespace MonoDragons.Core.Engine
             GetOffset = () => Transform2.Zero;
         }
 
+        protected void Add(IVisual visual) =>  OnlyDuringInit(() => _visuals.Add(visual));
+        protected void Add(IAutomaton automaton) => OnlyDuringInit(() => _automata.Add(automaton));
+        protected void Add(object actor) => OnlyDuringInit(() => _actors.Add(actor));
         protected void Add(IVisualAutomaton obj)
         {
             OnlyDuringInit(() =>
