@@ -50,6 +50,14 @@ namespace MonoDragons.ZFS.Tiles
         public bool Exists(Point point) => Exists(point.X, point.Y);
         public bool Exists(int x, int y) => _tileMap.ContainsKey(x) && _tileMap[x].ContainsKey(y);
 
+        public void IfTileExistsAt(Vector2 position, Action<Point> withTile, Action ifNotExists)
+        {
+            if (Exists(MapPositionToTile(position)))
+                withTile(MapPositionToTile(position));
+            else
+                ifNotExists();
+        }
+        
         public Point MapPositionToTile(Vector2 position)
         {
             var tilePositionOnMap = new Vector2(position.X - (position.X % RenderSize), position.Y - (position.Y % RenderSize));

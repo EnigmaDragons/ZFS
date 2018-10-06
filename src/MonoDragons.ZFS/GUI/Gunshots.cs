@@ -90,11 +90,11 @@ namespace MonoDragons.ZFS.GUI
 
         private class MissedShotVisual : IShotVisual
         {
-            private readonly Texture2D _texture;
             private readonly Transform2 _transform;
+            private readonly Texture2D _texture;
             private readonly Character _attacker;
             private readonly Character _target;
-            private double _distanceTravled = 0;
+            private double _distanceTraveled = 0;
             private Point _tile;
             public bool IsDone { get; private set; }
             private bool _publishedEvent;
@@ -109,13 +109,17 @@ namespace MonoDragons.ZFS.GUI
             }
 
             public void Update(TimeSpan delta)
-            {
+            {              
                 var distance = delta.TotalMilliseconds * TravelSpeed;
-                _distanceTravled += distance;
+                _distanceTraveled += distance;
+                if (!IsDone)
+                {
+                    _transform.Location = _transform.Location.MoveInDirection(_transform.Rotation.Value, _distanceTraveled);
+                    CurrentData.Map.IfTileExistsAt(_transform.Location, t => _tile = t, () => IsDone = true);
+                }
                 if (!CurrentData.Map.Exists(_tile) || CurrentData.Map[_tile].Cover == Cover.Heavy)
                     IsDone = true;
-
-                if (!_publishedEvent && (_distanceTravled > 50 || IsDone))
+                if (!_publishedEvent && (_distanceTraveled > 50 || IsDone))
                 {
                     Event.Queue(new AttackAnimationsFinished(_attacker, _target));
                     _publishedEvent = true;
@@ -124,15 +128,8 @@ namespace MonoDragons.ZFS.GUI
 
             public void Draw(Transform2 parentTransform)
             {
-                var modifiedTransform = _transform;
-                modifiedTransform.Location = modifiedTransform.Location.MoveInDirection(_transform.Rotation.Value, _distanceTravled);
-                if (CurrentData.Map.Exists(CurrentData.Map.MapPositionToTile(modifiedTransform.Location)))
-                    _tile = CurrentData.Map.MapPositionToTile(modifiedTransform.Location);
-                else
-                    IsDone = true;
-                modifiedTransform += parentTransform;
                 UI.SpriteBatch.Draw(texture: _texture,
-                    destinationRectangle: UI.ScaleRectangle(modifiedTransform.ToRectangle()),
+                    destinationRectangle: UI.ScaleRectangle((parentTransform + _transform).ToRectangle()),
                     sourceRectangle: null,
                     color: UiColors.Gunshot_MissedShot,
                     rotation: _transform.Rotation.Value - (float)(Math.PI / 2),
