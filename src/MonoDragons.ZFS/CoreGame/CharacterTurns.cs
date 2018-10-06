@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using MonoDragons.Core.Engine;
 using MonoDragons.Core.EventSystem;
 using MonoDragons.ZFS.Characters;
 using MonoDragons.ZFS.CoreGame.StateEvents;
@@ -20,8 +19,8 @@ namespace MonoDragons.ZFS.CoreGame
         {
             _characters = characters.OrderByDescending(x => x.Stats.Agility).ToList();
             CurrentCharacter = _characters.First();
-            Event.Subscribe(EventSubscription.Create<TurnEnded>(BeginNextTurn, this));
-            Event.Subscribe(EventSubscription.Create<CharacterDeceased>(OnCharacterDeath, this));
+            Event.Subscribe<TurnEnded>(BeginNextTurn, this);
+            Event.Subscribe<GameOver>(x => _isGameOver = true, this);
         }
 
         public void Init()
@@ -56,19 +55,6 @@ namespace MonoDragons.ZFS.CoreGame
             if (_activeCharacterIndex == _characters.Count)
                 _activeCharacterIndex = 0;
             CurrentCharacter = _characters[_activeCharacterIndex];
-        }
-
-        private void OnCharacterDeath(CharacterDeceased e)
-        {
-            if (CurrentData.Friendlies.All(x => x.State.IsDeceased) || CurrentData.MainCharacter.State.IsDeceased)
-            {
-                Event.Queue(new GameOver());
-                _isGameOver = true;
-            }
-            else if (CurrentCharacter == e.Victim)
-            {
-                Event.Queue(new ActionResolved());
-            }
         }
     }
 }

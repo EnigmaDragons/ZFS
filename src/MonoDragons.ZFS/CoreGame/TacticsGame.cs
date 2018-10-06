@@ -7,6 +7,7 @@ using MonoDragons.Core.UserInterface;
 using MonoDragons.ZFS.AI;
 using MonoDragons.ZFS.CoreGame.Calculators;
 using MonoDragons.ZFS.CoreGame.Controls;
+using MonoDragons.ZFS.CoreGame.Mechanics.Resolution;
 using MonoDragons.ZFS.GUI;
 using Camera = MonoDragons.ZFS.GUI.Camera;
 
@@ -43,6 +44,8 @@ namespace MonoDragons.ZFS.CoreGame
             Add(new FriendlyVisionCalculator());
             Add(new NewEnemySpotter());
             Add(new DialogWatcher());
+            Add(new FinishActionIfCurrentCharacterDies());
+            Add(new LevelEndConditions());
             Add(Event.UseQueue());
             Add(_drawMaster);
             Add(_combat);

@@ -87,8 +87,13 @@
     <Compile Include="CoreGame\Mechanics\Events\LevelledUp.cs" />
     <Compile Include="CoreGame\Mechanics\Events\PrimaryObjectiveCompleted.cs" />
     <Compile Include="CoreGame\Mechanics\Events\XpGained.cs" />
+    <Compile Include="CoreGame\Mechanics\Objectives\AllFriendliesAreDead.cs" />
     <Compile Include="CoreGame\Mechanics\Objectives\DefeatAllEnemies.cs" />
+    <Compile Include="CoreGame\Mechanics\Objectives\GameOverCondition.cs" />
+    <Compile Include="CoreGame\Mechanics\Objectives\LevelEndConditions.cs" />
+    <Compile Include="CoreGame\Mechanics\Objectives\MainCharacterDied.cs" />
     <Compile Include="CoreGame\Mechanics\Objectives\PrimaryObjective.cs" />
+    <Compile Include="CoreGame\Mechanics\Resolution\FinishActionIfCurrentCharacterDies.cs" />
     <Compile Include="CoreGame\Mechanics\Resolution\GainXpOnEnemyDeath.cs" />
     <Compile Include="CoreGame\Mechanics\Resolution\GameEffectResolvers.cs" />
     <Compile Include="CoreGame\Mechanics\Resolution\NavigateToMainMenuOnLevelCompleted.cs" />
